@@ -6,7 +6,8 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                sh 'apk add git'
+                sh 'apk add sudo'
+                sh 'sudo apk add git'
                 //sh 'apt install git -y '
                 sh 'git clone https://github.com/VikasThantravahi/git-.git'
                 sh 'ls -lrt'
