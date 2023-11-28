@@ -9,6 +9,7 @@ pipeline {
                 //sh 'apk add git'
                 sh 'git clone https://github.com/VikasThantravahi/git-.git'
                 sh 'ls -lrt'
+                sh 'cat /etc/os-release'
             }
         }
         stage('Test') {
