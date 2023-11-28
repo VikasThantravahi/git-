@@ -6,6 +6,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'node --version'
+                sh 'cat /etc/os-release'
+                sh 'echo "success_________________________>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"'
             }
         }
     }
