@@ -7,6 +7,7 @@ pipeline {
         stage('Clone') {
             steps {
                 //sh 'apk add git'
+                sh 'apt install git -y '
                 sh 'git clone https://github.com/VikasThantravahi/git-.git'
                 sh 'ls -lrt'
                 sh 'cat /etc/os-release'
