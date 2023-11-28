@@ -10,7 +10,7 @@ pipeline {
                 //sh 'sudo apk add git'
                // sh 'apt update'
                 //sh 'apt install git -y'
-                sh 'git clone https://github.com/VikasThantravahi/git-.git'
+                //sh 'git clone https://github.com/VikasThantravahi/git-.git'
                 sh 'ls -lrt'
                 sh 'cat /etc/os-release'
             }
