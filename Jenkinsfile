@@ -8,7 +8,7 @@ pipeline {
             steps {
                 //sh 'apk add sudo'
                 //sh 'sudo apk add git'
-                sh 'apt install sudo -y'
+                sh 'apt update'
                 sh 'apt install git -y'
                 sh 'git clone https://github.com/VikasThantravahi/git-.git'
                 sh 'ls -lrt'
