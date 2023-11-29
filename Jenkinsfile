@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'gittools/gitversion:6.0.0-beta.3-alpine.3.16-6.0' }
+        docker { image 'vikas1818/pyimage:template' }
         //docker { image 'node:20.10.0-alpine3.18' }
     }
     stages {
