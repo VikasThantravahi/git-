@@ -54,7 +54,7 @@ jobs:
            command: "echo Hello, World!"
        - restore_cache:
            key: my-key
-        - run:
+       - run:
            name: "Test restore"
            command: |
              ls -la
