@@ -34,7 +34,7 @@ jobs:
             fi
 
       # Save cache for future builds
-     - save_cache:
+      - save_cache:
           key: my-key
           paths:
             - /home/circleci/project/yarn_install
