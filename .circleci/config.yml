@@ -30,15 +30,15 @@ jobs:
             else
               echo "Cache not found, running yarn install."
               touch yarn_install
-              echo "CACHE_REQUIRED=true" >> cache_required.env
+              echo "export BUILD_NEEDED=\"false\"" >> $BASH_ENV
               ls -la
               pwd
+              exit 1
             fi
 
       # Save cache for future builds
       - save_cache:
           key: my-key
-          when: cache_required
           paths:
             - /home/circleci/project/yarn_install
   say-bye: 
