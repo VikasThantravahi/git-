@@ -39,7 +39,7 @@ jobs:
       # Save cache for future builds
       - save_cache:
           key: my-key
-          when: on_success
+          when: on_fail
           paths:
             - /home/circleci/project/yarn_install
   say-bye: 
