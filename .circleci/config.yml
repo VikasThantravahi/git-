@@ -42,23 +42,23 @@ jobs:
      docker:
       # Specify the version you desire here
       # See: https://circleci.com/developer/images/image/cimg/base
-      - image: cimg/base:current
+       - image: cimg/base:current
 
     # Add steps to the job
     # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
-    steps:
+     steps:
       # Checkout the code as the first step.
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-      - restore_cache:
-          key: my-key
+       - checkout
        - run:
-          name: "Test restore"
-          command: |
-            ls -la
-            pwd
+           name: "Say hello"
+           command: "echo Hello, World!"
+       - restore_cache:
+           key: my-key
+        - run:
+           name: "Test restore"
+           command: |
+             ls -la
+             pwd
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
