@@ -26,9 +26,11 @@ jobs:
           command: |
             if [ -d "node_modules" ]; then
               echo "Cache restored, skipping yarn install."
+              exit 1
             else
               echo "Cache not found, running yarn install."
               touch yarn_install
+              echo "CACHE_REQUIRED=true" >> cache_required.env
               ls -la
               pwd
             fi
@@ -36,6 +38,7 @@ jobs:
       # Save cache for future builds
       - save_cache:
           key: my-key
+          when: cache_required
           paths:
             - /home/circleci/project/yarn_install
   say-bye: 
