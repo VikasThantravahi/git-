@@ -26,7 +26,6 @@ jobs:
           command: |
             if [ -f "Jenkinsfile" ]; then
               echo "Cache restored, skipping yarn install."
-              set -o errexit
               false
               
             else
