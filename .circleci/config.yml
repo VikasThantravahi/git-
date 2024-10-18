@@ -21,6 +21,22 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+      - run:
+          name: Install dependencies
+          command: |
+            if [ -d "node_modules" ]; then
+              echo "Cache restored, skipping yarn install."
+            else
+              echo "Cache not found, running yarn install."
+              touch yarn_install
+              ls -la
+              pwd
+            fi
+
+      # Save cache for future builds
+   #  - save_cache:
+    #      paths:
+     #       - node_modules
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
