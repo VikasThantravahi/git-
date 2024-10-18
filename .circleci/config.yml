@@ -24,13 +24,13 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            if [ -f "Jenkinsfile" ]; then
+            if [ -f "Jenkinsfilee" ]; then
               echo "Cache restored, skipping yarn install."
-              exit
+              
             else
               echo "Cache not found, running yarn install."
               touch yarn_install
-              echo "export BUILD_NEEDED=\"false\"" >> $BASH_ENV
+              echo "export CACHE_NOT_RESTORED=true" >> $BASH_ENV
               ls -la
               pwd
             fi
@@ -38,7 +38,8 @@ jobs:
       # Save cache for future builds
       - save_cache:
           key: my-key
-          when: on_success
+          condition: "if [ -n \"$CACHE_NOT_RESTORED\" ]; then exit 0; fi"
+          #when: on_success
           paths:
             - /home/circleci/project/yarn_install
       - run:
