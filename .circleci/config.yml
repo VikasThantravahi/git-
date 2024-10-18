@@ -26,7 +26,7 @@ jobs:
           command: |
             if [ -d "node_modules" ]; then
               echo "Cache restored, skipping yarn install."
-              exit 1
+              exit 0
             else
               echo "Cache not found, running yarn install."
               touch yarn_install
@@ -42,6 +42,9 @@ jobs:
           when: on_fail
           paths:
             - /home/circleci/project/yarn_install
+      - run:
+          name: "Hi Anudeep"
+          command: "echo Hello, World!"
   say-bye: 
      docker:
       # Specify the version you desire here
