@@ -39,7 +39,7 @@ jobs:
       # Save cache for future builds
       - save_cache:
           key: my-key
-          condition: "if [ -f 'test.txt' ]; then echo exit 0; fi"
+          condition: "if [ -f 'test.txt' ]; then exit 0; fi"
           #when: on_success
           paths:
             - /home/circleci/project/yarn_install
