@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            if [ -f "Jenkinsfilee" ]; then
+            if [ -f "Jenkinsfile" ]; then
               echo "Cache restored, skipping yarn install."
               
             else
