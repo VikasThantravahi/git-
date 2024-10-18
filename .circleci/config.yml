@@ -27,6 +27,7 @@ jobs:
             if [ -f "Jenkinsfile" ]; then
               echo "Cache restored, skipping yarn install."
               echo "This will run after false exits" || false
+              echo $?
               
             else
               echo "Cache not found, running yarn install."
