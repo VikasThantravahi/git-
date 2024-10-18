@@ -31,6 +31,7 @@ jobs:
               echo "Cache not found, running yarn install."
               touch yarn_install
               echo "export CACHE_NOT_RESTORED=true" >> $BASH_ENV
+              echo "test" > test.txt
               ls -la
               pwd
             fi
@@ -38,7 +39,7 @@ jobs:
       # Save cache for future builds
       - save_cache:
           key: my-key
-          condition: "if [ -n \"$CACHE_NOT_RESTORED\" ]; then exit 0; fi"
+          condition: "if [ -f "test.txt" ]; then echo "worked"; fi"
           #when: on_success
           paths:
             - /home/circleci/project/yarn_install
