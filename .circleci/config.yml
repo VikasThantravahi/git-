@@ -37,19 +37,19 @@ jobs:
             fi
 
       # Save cache for future builds
-     - save_cache:
-       key: my-key
-       when: on_success
-       paths:
-         - /home/circleci/project/yarn_install
-       condition:
-         run: |
-           if [ -f "test.txt" ]; then
-              echo "File exists"
-           else
-              echo "File does not exist"
-              exit 1
-           fi
+      - save_cache:
+          key: my-key
+          when: on_success
+          paths:
+            - /home/circleci/project/yarn_install
+          condition:
+            run: |
+              if [ -f "test.txt" ]; then
+                 echo "File exists"
+              else
+                 echo "File does not exist"
+                 exit 1
+              fi
       - run:
           name: "Hi Anudeep"
           command: "echo Hello, World!"
