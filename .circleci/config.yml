@@ -26,7 +26,7 @@ jobs:
           command: |
             if [ -f "Jenkinsfile" ]; then
               echo "Cache restored, skipping yarn install."
-              return 0
+              exit_code=1
             else
               echo "Cache not found, running yarn install."
               touch yarn_install
@@ -34,8 +34,10 @@ jobs:
               echo "test" > test.txt
               ls -la
               pwd
+              exit_code=2
             fi
-
+            echo $exit_code
+            exit $exit_code
       # Save cache for future builds
       - save_cache:
           condition:
