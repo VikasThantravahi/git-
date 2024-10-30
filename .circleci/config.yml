@@ -80,6 +80,10 @@ jobs:
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
+    when:
+      or:
+        - equal: [cricleci-project-setup, <<pipeline.git.branch>>]
+        - equal: [main, <<pipeline.git.branch>>]
     jobs:
       - say-hello:
           filters:
