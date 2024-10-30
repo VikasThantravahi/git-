@@ -83,7 +83,6 @@ workflows:
     when:
       or:
         - equal: [cricleci-project-setup, <<pipeline.git.branch>>]
-        - equal: [main, <<pipeline.git.branch>>]
     jobs:
       - say-hello:
           filters:
