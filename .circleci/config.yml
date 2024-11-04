@@ -89,16 +89,12 @@ jobs:
            name: "Say hello"
            command: |
               echo "Hello, World!"
-              ls -lart
-
-    
-           
+              ls -lart    
        - run:
            name: "Test restore"
            command: |
              ls -la
              pwd
-             echo "build number is ${{ .BuildNum }}"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
