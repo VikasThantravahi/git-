@@ -68,8 +68,9 @@ jobs:
        - run:
            name: "Say hello"
            command: |
-              echo "Hello, World!" >> build$CIRCLE_PIPELINE_NUMBER
+              echo "Hello, World!" >> build$pipeline.number
               ls -la
+              echo $pipeline.number
        #- restore_cache:
         #   key: my-key
        - run:
