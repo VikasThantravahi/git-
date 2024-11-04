@@ -34,11 +34,11 @@ jobs:
             echo "Hello, world" >  build$PIPELINE_NUMBER
             echo "Hi" > Hi.txt
             ls -lart
-            echo "build number is $BuildNum "
+            
       - save_cache:
           paths:
             - Hi.txt
-          key:  build-{{ $PIPELINE_NUMBER }}-{{ checksum "hi" }}
+          key:   v1-my-cache-{{ .BuildNum }}-{{ checksum "hi" }}
       
 
       - run:
@@ -84,16 +84,14 @@ jobs:
       # Checkout the code as the first step.
        - checkout
        - restore_cache:
-           key: build-{{ $PIPELINE_NUMBER }}-{{ checksum "hi" }}
+           key: v1-my-cache-{{ .BuildNum }}-{{ checksum "hi" }}
        - run:
            name: "Say hello"
            command: |
               echo "Hello, World!"
               ls -lart
 
-      
-
-
+    
            
        - run:
            name: "Test restore"
