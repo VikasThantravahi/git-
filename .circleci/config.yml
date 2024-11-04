@@ -10,6 +10,8 @@ commands:
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   say-hello:
+    environment:
+      PIPELINE_NUMBER: << pipeline.number >>
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/executor-intro/ & https://circleci.com/docs/configuration-reference/#executor-job
     docker:
@@ -24,7 +26,13 @@ jobs:
       - checkout
       - run:
           name: "Say hello"
-          command: "echo Hello, World!"
+          command: "echo Hello, World!" 
+      - run:
+          name: print env
+          command: |
+            echo $pipeline.number
+            echo "Hello, world" >  build$pipeline.number
+            ls -lart
       - run:
           name: Install dependencies
           command: |
@@ -68,9 +76,8 @@ jobs:
        - run:
            name: "Say hello"
            command: |
-              echo "Hello, World!" >> build$pipeline.number
-              ls -la
-              echo $pipeline.number
+              echo "Hello, World!"
+
        #- restore_cache:
         #   key: my-key
        - run:
