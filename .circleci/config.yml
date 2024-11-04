@@ -37,7 +37,7 @@ jobs:
       - save_cache:
           paths:
             - Hi.txt
-          key:  build-{{ pipeline.number }}-{{ checksum "hi" }}
+          key:  build-{{PIPELINE_NUMBER }}-{{ checksum "hi" }}
       
 
       - run:
@@ -70,6 +70,8 @@ jobs:
           name: "Hi Anudeep"
           command: "echo Hello, World!"
   say-bye: 
+     environment:
+       PIPELINE_NUMBER: << pipeline.number >>  
      docker:
       # Specify the version you desire here
       # See: https://circleci.com/developer/images/image/cimg/base
@@ -81,7 +83,7 @@ jobs:
       # Checkout the code as the first step.
        - checkout
        - restore_cache:
-           key: build-{{ pipeline.number }}-{{ checksum "hi" }}
+           key: build-{{ PIPELINE_NUMBER }}-{{ checksum "hi" }}
        - run:
            name: "Say hello"
            command: |
