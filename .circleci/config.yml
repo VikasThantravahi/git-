@@ -33,7 +33,7 @@ jobs:
             echo "Hi" > Hi.txt
             ls -lart
             echo $CIRCLE_BUILD_NUM
-            echo "pipeline number is $pipeline.number"
+            echo "pipeline number is $PIPELINE_NUMBER"
             
             
       - save_cache:
@@ -78,7 +78,7 @@ jobs:
               echo "Hello, World!"
               ls -lart
               echo $CIRCLE_BUILD_NUM
-              echo "pipeline number is $pipeline.number"
+              echo "pipeline number is $PIPELINE_NUMBER"
        - run:
            name: "Test restore"
            command: |
