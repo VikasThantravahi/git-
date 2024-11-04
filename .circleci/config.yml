@@ -107,7 +107,6 @@ workflows:
     when:
       or:
         - equal: [circleci-project-setup, << pipeline.git.branch >>]
-
     jobs:
       - say-hello
       - say-bye:
