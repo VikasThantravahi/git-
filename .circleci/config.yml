@@ -34,6 +34,7 @@ jobs:
             echo "Hello, world" >  build$PIPELINE_NUMBER
             echo "Hi" > Hi.txt
             ls -lart
+            echo $.BuildNum
             
       - save_cache:
           paths:
@@ -70,6 +71,7 @@ jobs:
       - run:
           name: "Hi Anudeep"
           command: "echo Hello, World!"
+          
   say-bye: 
      environment:
        PIPELINE_NUMBER: << pipeline.number >>  
@@ -89,7 +91,8 @@ jobs:
            name: "Say hello"
            command: |
               echo "Hello, World!"
-              ls -lart    
+              ls -lart
+              echo $.BuildNum
        - run:
            name: "Test restore"
            command: |
