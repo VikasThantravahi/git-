@@ -38,7 +38,7 @@ jobs:
       - save_cache:
           paths:
             - Hi.txt
-          key:   v1-my-cache-{{ .BuildNum }}-{{ checksum "hi" }}
+          key:   v1-my-cache-{{ .BuildNum }}-{{ checksum "Hi.txt" }}
       
 
       - run:
@@ -84,7 +84,7 @@ jobs:
       # Checkout the code as the first step.
        - checkout
        - restore_cache:
-           key: v1-my-cache-{{ .BuildNum }}-{{ checksum "hi" }}
+           key: v1-my-cache-{{ .BuildNum }}-{{ checksum "Hi.txt" }}
        - run:
            name: "Say hello"
            command: |
