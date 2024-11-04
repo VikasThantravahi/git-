@@ -101,7 +101,5 @@ workflows:
 
     jobs:
       - say-hello
-      - say-bye:
-          requires:
-            - say-hello
+      - say-bye
 
