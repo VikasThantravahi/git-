@@ -39,7 +39,7 @@ jobs:
       - save_cache:
           paths:
             - Hi.txt
-          key: v1-my-cache-{{ $PIPELINE_NUMBER }}-{{ checksum "Hi.txt" }}
+          key: v1-my-cache- $PIPELINE_NUMBER-{{ checksum "Hi.txt" }}
       
 
       # Save cache for future builds
