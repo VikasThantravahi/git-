@@ -34,10 +34,11 @@ jobs:
             echo "Hello, world" >  build$PIPELINE_NUMBER
             echo "Hi" > Hi.txt
             ls -lart
+            echo "build number is ${{ .BuildNum }}"
       - save_cache:
           paths:
             - Hi.txt
-          key:  build-{{ $pipeline.number }}-{{ checksum "hi" }}
+          key:  build-{{ $PIPELINE_NUMBER }}-{{ checksum "hi" }}
       
 
       - run:
@@ -99,6 +100,7 @@ jobs:
            command: |
              ls -la
              pwd
+             echo "build number is ${{ .BuildNum }}"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
