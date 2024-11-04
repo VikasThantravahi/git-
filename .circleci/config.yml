@@ -104,4 +104,4 @@ workflows:
 
       - say-bye
           requires:
-          - say-hello
+            - say-hello
