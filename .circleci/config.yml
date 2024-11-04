@@ -37,7 +37,7 @@ jobs:
       - save_cache:
           paths:
             - Hi.txt
-          key: hi
+          key:  build-{{ pipeline.number }}-{{ checksum "hi" }}
       
 
       - run:
@@ -81,7 +81,7 @@ jobs:
       # Checkout the code as the first step.
        - checkout
        - restore_cache:
-           key: hi
+           key: build-{{ pipeline.number }}-{{ checksum "hi" }}
        - run:
            name: "Say hello"
            command: |
