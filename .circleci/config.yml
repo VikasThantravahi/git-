@@ -87,6 +87,6 @@ workflows:
         - equal: [circleci-project-setup, << pipeline.git.branch >>]
 
     jobs:
-      - say-hello:
+      - say-hello
 
       - say-bye
