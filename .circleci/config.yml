@@ -30,8 +30,8 @@ jobs:
       - run:
           name: print env
           command: |
-            echo $pipeline.number
-            echo "Hello, world" >  build$pipeline.number
+            echo $PIPELINE_NUMBER
+            echo "Hello, world" >  build$PIPELINE_NUMBER
             ls -lart
       - run:
           name: Install dependencies
