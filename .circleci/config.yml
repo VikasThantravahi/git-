@@ -56,7 +56,7 @@ jobs:
   say-bye: 
      environment:
        PIPELINE_NUMBER: << pipeline.number >>  
-       Build_number: << .BuildNum >>
+       #Build_number: << .BuildNum >>
        
      docker:
       # Specify the version you desire here
