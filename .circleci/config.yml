@@ -32,7 +32,8 @@ jobs:
             echo "Hello, world" >  build$PIPELINE_NUMBER
             echo "Hi" > Hi.txt
             ls -lart
-            echo $Build_number
+            echo $CIRCLE_BUILD_NUM
+            
             
       - save_cache:
           paths:
