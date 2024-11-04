@@ -33,6 +33,10 @@ jobs:
             echo $PIPELINE_NUMBER
             echo "Hello, world" >  build$PIPELINE_NUMBER
             ls -lart
+      - save_cache:
+        paths:
+          - build$PIPELINE_NUMBER
+        key: build- {{ pipeline.number }}-{{ checksum "hello" }}
       - run:
           name: Install dependencies
           command: |
@@ -78,8 +82,9 @@ jobs:
            command: |
               echo "Hello, World!"
 
-       #- restore_cache:
-        #   key: my-key
+       - restore_cache:
+           key:  build- {{ pipeline.number }}-{{ checksum "hello" }}
+           
        - run:
            name: "Test restore"
            command: |
@@ -98,3 +103,5 @@ workflows:
       - say-hello
 
       - say-bye
+          requires:
+          - say-hello
