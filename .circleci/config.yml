@@ -76,7 +76,7 @@ jobs:
            command: |
               echo "Hello, World!"
               ls -lart
-              echo $Build_number
+              echo $CIRCLE_BUILD_NUM
        - run:
            name: "Test restore"
            command: |
