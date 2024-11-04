@@ -32,7 +32,13 @@ jobs:
           command: |
             echo $PIPELINE_NUMBER
             echo "Hello, world" >  build$PIPELINE_NUMBER
+            echo "Hi" > Hi.txt
             ls -lart
+      - save_cache:
+          paths:
+            - Hi.txt
+          key: hi
+      
 
       - run:
           name: Install dependencies
@@ -74,10 +80,15 @@ jobs:
      steps:
       # Checkout the code as the first step.
        - checkout
+       - restore_cache:
+           key: Hi
        - run:
            name: "Say hello"
            command: |
               echo "Hello, World!"
+              ls -lart
+
+      
 
 
            
@@ -98,4 +109,6 @@ workflows:
     jobs:
       - say-hello
       - say-bye
+          requires:
+            - say-hello
 
