@@ -71,7 +71,7 @@ jobs:
       # Checkout the code as the first step.
        - checkout
        - restore_cache:
-           key: v1-my-cache-{{ $PIPELINE_NUMBER }}-{{ checksum "Hi.txt" }}
+           key: v1-my-cache- $PIPELINE_NUMBER -{{ checksum "Hi.txt" }}
        - run:
            name: "Say hello"
            command: |
