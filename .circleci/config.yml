@@ -41,7 +41,6 @@ jobs:
             - Hi.txt
           key: v1-my-cache--{{ checksum "hi" }}
       
-
       # Save cache for future builds
       - save_cache:
           key: my-key
