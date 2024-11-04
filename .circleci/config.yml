@@ -37,7 +37,7 @@ jobs:
       - save_cache:
           paths:
             - Hi.txt
-          key:  build-{{ $PIPELINE_NUMBER }}-{{ checksum "hi" }}
+          key:  build-{{ $pipeline.number }}-{{ checksum "hi" }}
       
 
       - run:
