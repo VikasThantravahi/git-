@@ -67,7 +67,9 @@ jobs:
        - checkout
        - run:
            name: "Say hello"
-           command: "echo Hello, World!"
+           command: |
+             "echo Hello, World!" >> build$CIRCLE_PIPELINE_NUMBER
+              ls -la
        #- restore_cache:
         #   key: my-key
        - run:
@@ -86,8 +88,5 @@ workflows:
 
     jobs:
       - say-hello:
-          filters:
-            branches:
-              only:
-                - main
+
       - say-bye
