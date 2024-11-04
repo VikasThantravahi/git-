@@ -34,7 +34,7 @@ jobs:
             echo "Hello, world" >  build$PIPELINE_NUMBER
             echo "Hi" > Hi.txt
             ls -lart
-            echo "build number is ${{ .BuildNum }}"
+            echo "build number is $BuildNum "
       - save_cache:
           paths:
             - Hi.txt
