@@ -15,6 +15,12 @@ commands:
    
         
 jobs:
+  devops:
+  steps:
+    - checkout
+    - test:
+        command: pwd
+    
 
 
   say-hello:
