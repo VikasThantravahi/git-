@@ -6,6 +6,7 @@ commands:
       command:
         type: string
      steps:
+       - checkout 
        - run: echo "hi" && << parameters.command >>
            
    
