@@ -13,10 +13,7 @@ commands:
           pwd
         
 jobs:
-  test:
-    steps:
-      - test:
-        command: ll
+
   say-hello:
     environment:
       PIPELINE_NUMBER: << pipeline.number >>
