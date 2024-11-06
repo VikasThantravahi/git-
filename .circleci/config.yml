@@ -1,5 +1,10 @@
 
 version: 2.1
+executors:
+  test_executor:
+    docker:
+      - image: ubuntu:20.04
+      
 commands:
   testing:
     parameters:
