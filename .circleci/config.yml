@@ -6,9 +6,19 @@ commands:
   test:
     steps:
        - run: echo "yes"
+       - when:
+           condtion:
+             or:
+               - equal: [circleci-project-setup, << pipeline.git.branch >>]
+           steps:
+             - run:
+               name: echo "hello"
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
+  hello-commmand:
+    steps:
+      - test
   say-hello:
     environment:
       PIPELINE_NUMBER: << pipeline.number >>
