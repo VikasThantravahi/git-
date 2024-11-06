@@ -43,5 +43,8 @@ jobs:
       - checkout
       - build_ll_public:
           command: echo "hello world"
-
+workflows:
+  version: 2
+  test-and-build:
+    jobs: build_internal_dashboard
   
