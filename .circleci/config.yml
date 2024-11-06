@@ -1,12 +1,6 @@
 
 version: 2.1
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  hello-commmand:
-    steps:
-      - test
   say-hello:
     environment:
       PIPELINE_NUMBER: << pipeline.number >>
@@ -18,8 +12,6 @@ jobs:
       # See: https://circleci.com/developer/images/image/cimg/base
       - image: cimg/base:current
     shell: /bin/bash --login
-    # Add steps to the job
-    # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
     steps:
       # Checkout the code as the first step.
       - checkout
