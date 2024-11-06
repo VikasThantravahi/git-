@@ -24,8 +24,14 @@ jobs:
     steps:
       - test:
           command: echo "hi"
+  you:
+    steps:
+      - run:
+         name: hey
+         command: echo "hello"
 workflows:
   testflow:
     jobs:
+      - you
       - checking
 
