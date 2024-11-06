@@ -12,7 +12,8 @@ commands:
                - equal: [circleci-project-setup, << pipeline.git.branch >>]
            steps:
              - run:
-               name: echo "hello"
+               name: command
+               command: echo "yess"
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
