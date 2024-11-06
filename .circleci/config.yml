@@ -26,4 +26,4 @@ workflows:
       - example-job:
           command_name: "pwd"  # You can dynamically specify the command here (e.g., 'pwd', 'ls', etc.)
 
-has context menu
+
