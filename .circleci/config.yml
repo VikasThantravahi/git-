@@ -22,7 +22,7 @@ commands:
                echo "Cache not found, running yarn install."
                echo "hi"
             fi
-      - run: mkdir test && cd test && touch 1
+      - run: - run: mkdir test && cd test && touch 1 && ls -lart && pwd
 
      
       - run:   << parameters.command >>
@@ -47,9 +47,17 @@ jobs:
       - checkout
       - build_ll_public:
           command: echo "hello world"
+  cachess:
+    steps:
+      - checkout
+      - restore_cache:
+          key: test
+      - run: ls -lart && pwd
+
 workflows:
   version: 2
   test-and-build:
     jobs:
       -  build_internal_dashboard
+      -  cachess
   
