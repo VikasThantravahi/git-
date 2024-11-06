@@ -1,5 +1,9 @@
 
 version: 2.1
+executors:
+  ll_public_executors:
+    docker:
+      - image: ubuntu:20.04
 commands:
   build_ll_public:
     description: 'Builds a CRA and caches the build'
