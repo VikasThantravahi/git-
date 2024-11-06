@@ -1,5 +1,18 @@
 
 version: 2.1
+commands:
+  testing:
+    parameters:
+      command:
+        type: string
+     steps:
+       - run:
+           name: hello
+           command: |
+             ls
+             ls -lart
+           
+   
         
 jobs:
 
