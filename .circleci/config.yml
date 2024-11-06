@@ -1,18 +1,8 @@
 
 version: 2.1
-commands:
-  test:
-    parameters:
-      command:
-        type: string
-    steps:
-      - run:
-        name: command test
-        command: |
-          ls
-          pwd
         
 jobs:
+
 
   say-hello:
     environment:
