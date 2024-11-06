@@ -1,37 +1,36 @@
 version: 2.1
-commands:
-  test:
-    parameters:
-      command:
-        type: string
-    steps:
-      - run:
-          name: test
-          command: |
-            echo "hi"
-            echo "hello"
-      - when:
-          condition:
-            or:
-              - equals: [circleci-project-setup, "<< pipeline.git.branch >>"]
-          steps:
-            - run:
-                name: hey
-                command: echo "hello"
+# commands:
+#   test:
+#     parameters:
+#       command:
+#         type: string
+#     steps:
+#       - run:
+#           name: test
+#           command: |
+#             echo "hi"
+#             echo "hello"
+#       - when:
+#           condition:
+#             or:
+#               - equals: [circleci-project-setup, "<< pipeline.git.branch >>"]
+#           steps:
+#             - run:
+#                 name: hey
+#                 command: echo "hello"
 
 jobs:
-  checking:
-    steps:
-      - test:
-          command: echo "hi"
+  # checking:
+  #   steps:
+  #     - test:
+  #         command: echo "hi"
   you:
     steps:
       - run:
          name: hey
          command: echo "hello"
 workflows:
-  testflow:
+  test-flow:
     jobs:
       - you
       - checking
-
