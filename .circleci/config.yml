@@ -1,36 +1,26 @@
 version: 2.1
-# commands:
-#   test:
-#     parameters:
-#       command:
-#         type: string
-#     steps:
-#       - run:
-#           name: test
-#           command: |
-#             echo "hi"
-#             echo "hello"
-#       - when:
-#           condition:
-#             or:
-#               - equals: [circleci-project-setup, "<< pipeline.git.branch >>"]
-#           steps:
-#             - run:
-#                 name: hey
-#                 command: echo "hello"
+
+commands:
+  test:
+    description: "A simple test command"
+    steps:
+      - when:
+          condition:
+            or:
+              - equal: [circleci-project-setup, << pipeline.git.branch >>]
+          steps:
+            - run:
+                name: "Test"
+                command: echo "yess"
 
 jobs:
-  # checking:
-  #   steps:
-  #     - test:
-  #         command: echo "hi"
-  you:
+  hello-command:
+    description: "Job to execute the test command"
     steps:
-      - run:
-         name: hey
-         command: echo "hello"
+      - test  # This references the command defined above
+
 workflows:
-  test-flow:
+  version: 2
+  example-workflow:
     jobs:
-      - you
-      - checking
+      - hello-command
