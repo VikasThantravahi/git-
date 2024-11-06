@@ -1,29 +1,45 @@
+
 version: 2.1
- 
-executors:
-  docker-executor:
-    docker:
-      - image: circleci/python:3.8  # Example base image
-    working_directory: /workspace
- 
-jobs:
-  example-job:
-    executor: docker-executor
+commands:
+  build_ll_public:
+    description: 'Builds a CRA and caches the build'
     parameters:
-      command_name:
+      command:
         type: string
-        default: "pwd"  # Default to 'pwd' if no command is passed
     steps:
-      - checkout  # Checkout the repository
+      - restore_cache:
+          key: ll-public-node-modules-{{ checksum "ll-public/package.json" }}__{{ checksum "ll-public/yarn.lock" }}
       - run:
-          name: Run the dynamic command
-          command: << parameters.command_name >>  # This will run the command passed in the parameter
- 
-workflows:
-  version: 2
-  build:
-    jobs:
-      - example-job:
-          command_name: "pwd"  # You can dynamically specify the command here (e.g., 'pwd', 'ls', etc.)
+          name: Verify and Install Dependencies
+          command: |
+            if [ 5==5 ]; then
+               echo "Cache restored, skipping yarn install."
+            else
+               echo "Cache not found, running yarn install."
+               echo "hi"
+            fi
+      - run: mkdir test && cd test && touch 1
 
+     
+      - run:   << parameters.command >>
+      - when:
+          condition:
+            or:
+              - equal: [circelci-project-setup , << pipeline.git.branch >>]
+              - equal: [qa, << pipeline.git.branch >>]
+              - matches: { pattern: '^sb-\S+$', value: << pipeline.git.branch >> }
+              - matches: { pattern: '^hotfix\/\S+$', value: << pipeline.git.branch >> }
+          steps:
+            
+            - save_cache:
+                key: test
+                paths:
+                  - test/1
 
+jobs:
+  build_internal_dashboard:
+    executor: ll_public_executor
+    steps:
+      - checkout
+      - build_ll_public:
+          command: echo "hello world"
