@@ -1,26 +1,84 @@
-version: 2.1
-
-commands:
-  test:
-    description: "A simple test command"
-    steps:
-      - when:
-          condition:
-            or:
-              - equal: [circleci-project-setup, << pipeline.git.branch >>]
-          steps:
-            - run:
-                name: "Test"
-                command: echo "yess"
-
 jobs:
-  hello-command:
-    description: "Job to execute the test command"
+  hello-commmand:
     steps:
-      - test  # This references the command defined above
+      - test
+  say-hello:
+    environment:
+      PIPELINE_NUMBER: << pipeline.number >>
+    docker:
+      - image: cimg/base:current
+    shell: /bin/bash --login
 
+    steps:
+      - checkout
+      - run:
+          name: print env
+          command: |
+            echo $PIPELINE_NUMBER
+            echo "Hello, world" >  build$PIPELINE_NUMBER
+            echo "Hi" > Hi.txt
+            ls -lart
+            echo $CIRCLE_BUILD_NUM
+            echo "pipeline number is $PIPELINE_NUMBER"
+            
+            
+      - save_cache:
+          paths:
+            - Hi.txt
+          key: v1-my-cache--{{ checksum "Hi.txt" }}
+      
+      # Save cache for future builds
+      - save_cache:
+          key: my-key
+          paths:
+            - /home/circleci/project/yarn_install
+          pre-steps:
+            - run:
+                command: |
+                  if [ -f "test.txt" ]; then
+                    echo "doing pre-verify"
+                  fi
+         
+  say-bye: 
+     environment:
+       PIPELINE_NUMBER: << pipeline.number >>  
+       #Build_number: << .BuildNum >>
+       
+     docker:
+      # Specify the version you desire here
+      # See: https://circleci.com/developer/images/image/cimg/base
+       - image: cimg/base:current
+
+    # Add steps to the job
+    # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
+     steps:
+      # Checkout the code as the first step.
+       - checkout
+       - restore_cache:
+           key: v1-my-cache--{{ checksum "Hi.txt" }}
+       - run:
+           name: "Say hello"
+           command: |
+              echo "Hello, World!"
+              ls -lart
+              echo $CIRCLE_BUILD_NUM
+              echo "pipeline number is $PIPELINE_NUMBER"
+       - run:
+           name: "Test restore"
+           command: |
+             ls -la
+             pwd
+
+# Orchestrate jobs using workflows
+# See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  version: 2
-  example-workflow:
+  say-hello-workflow:
+    when:
+      or:
+        - equal: [circleci-project-setup, << pipeline.git.branch >>]
     jobs:
-      - hello-command
+      - say-hello
+      - say-bye:
+          requires:
+            - say-hello
+ 
