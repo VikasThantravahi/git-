@@ -9,17 +9,6 @@ executors:
 jobs:
   example-job:
     executor: docker-executor
-    parameters:version: 2.1
- 
-executors:
-  docker-executor:
-    docker:
-      - image: circleci/python:3.8  # Example base image
-    working_directory: /workspace
- 
-jobs:
-  example-job:
-    executor: docker-executor
     parameters:
       command_name:
         type: string
@@ -36,3 +25,5 @@ workflows:
     jobs:
       - example-job:
           command_name: "pwd"  # You can dynamically specify the command here (e.g., 'pwd', 'ls', etc.)
+
+has context menu
