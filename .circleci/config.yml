@@ -5,9 +5,9 @@ commands:
     parameters:
       command:
         type: string
-     steps:
-       - checkout 
-       - run: echo "hi" && << parameters.command >>
+    steps:
+      - checkout 
+      - run: echo "hi" && << parameters.command >>
            
    
         
