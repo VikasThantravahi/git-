@@ -11,6 +11,10 @@ commands:
            command: |
              ls
              ls -lart
+       - run:
+           name: test
+           command:
+             ls
            
    
         
