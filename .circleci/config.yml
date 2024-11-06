@@ -10,16 +10,15 @@ commands:
            name: hello
            command: |
              ls
-
            
    
         
 jobs:
   devops:
-  steps:
-    - checkout
-    - test:
-        command: pwd
+    steps:
+      - checkout
+      - testing:
+          command: pwd
     
 
 
@@ -98,11 +97,13 @@ jobs:
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
 workflows:
+  
   say-hello-workflow:
     when:
       or:
         - equal: [circleci-project-setup, << pipeline.git.branch >>]
     jobs:
+      - devops
       - say-hello
       - say-bye:
           requires:
