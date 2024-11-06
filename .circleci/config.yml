@@ -25,7 +25,7 @@ jobs:
       - test:
           command: echo "hi"
 workflows:
-  checking:
-    when:
-      or:
-        - equal: [circleci-project-setup, << pipeline.git.branch >>]
+  testflow:
+    jobs:
+      - checking
+
