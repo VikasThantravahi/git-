@@ -9,14 +9,14 @@ commands:
       - run:
         name: command test
         command: |
-          echo "hello"
-          echo "hi"
+          ls
+          pwd
         
 jobs:
   test:
     steps:
       - test:
-        command: echo "hii"
+        command: ll
   say-hello:
     environment:
       PIPELINE_NUMBER: << pipeline.number >>
