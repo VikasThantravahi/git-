@@ -5,11 +5,7 @@ commands:
     parameters:
       command:
         type: string
-     steps:
-       - run:
-           name: hello
-           command: |
-             ls
+
            
    
         
