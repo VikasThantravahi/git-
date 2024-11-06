@@ -22,7 +22,7 @@ commands:
                echo "Cache not found, running yarn install."
                echo "hi"
             fi
-      - run: - run: mkdir test && cd test && touch 1 && ls -lart && pwd
+      - run:  mkdir test && cd test && touch 1 && ls -lart && pwd
 
      
       - run:   << parameters.command >>
