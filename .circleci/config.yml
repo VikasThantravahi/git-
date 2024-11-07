@@ -14,14 +14,14 @@ jobs:
             - run:
               name: testing when condition
               command: echo "hello testing when condition sucessfully deployed"
-      - run:
-          name: Install dependencies
-          command: |
-              echo "hi"
-      - run:
-          name: Run tests
-          command: |
-              echo "Hello"
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #         echo "hi"
+      # - run:
+      #     name: Run tests
+      #     command: |
+      #         echo "Hello"
 
   deploy:
     docker:
