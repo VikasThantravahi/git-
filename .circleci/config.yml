@@ -46,6 +46,9 @@ jobs:
 workflows:
   version: 2
   build_and_deploy:
+    when:
+    - equal: [master, << pipeline.git.branch >>]
+    - equal: [circleci-project-setup, << pipeline.git.branch >>]
     jobs:
       - test        # Run the test job first
       - deploy:
