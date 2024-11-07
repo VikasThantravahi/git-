@@ -18,6 +18,7 @@ jobs:
               echo "Hello"
       - when:
           condition:
+            or:
               - equal: [circelci-project-setup, << pipeline.git.branch >>]
           steps:
             - run:
