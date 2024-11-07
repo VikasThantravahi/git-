@@ -1,3 +1,5 @@
+
+
 version: 2.1
 
 # Define the jobs
@@ -12,8 +14,8 @@ jobs:
             equal: [circel-ci-projectsetup, << pipeline.gitbrach >>]
           steps:
             - run:
-              name: testing when condition
-              command: echo "hello testing when condition sucessfully deployed"
+                name: testing when condition
+                command: echo "hello testing when condition sucessfully deployed"
       # - run:
       #     name: Install dependencies
       #     command: |
