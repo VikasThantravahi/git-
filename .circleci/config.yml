@@ -1,5 +1,3 @@
-
-
 version: 2.1
 
 # Define the jobs
@@ -16,14 +14,21 @@ jobs:
             - run:
                 name: testing when condition
                 command: echo "hello testing when condition sucessfully deployed"
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #         echo "hi"
-      # - run:
-      #     name: Run tests
-      #     command: |
-      #         echo "Hello"
+      - when:
+          condition:
+            equal: [circleci-project-setup, << pipeline.git.branch >>]
+          steps:
+            - run:
+                name: testing second time when condition
+                command: echo "when is an array here you can write multiple whens"
+      - run:
+          name: Install dependencies
+          command: |
+              echo "hi"
+      - run:
+          name: Run tests
+          command: |
+              echo "Hello"
 
   deploy:
     docker:
@@ -49,4 +54,4 @@ workflows:
           filters:
             branches:
               only:
-                - master  # Deploy job only runs on the master branch
+                - master  # Deploy job only ru
