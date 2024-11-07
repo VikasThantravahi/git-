@@ -37,3 +37,7 @@ workflows:
       - deploy:
           requires:
             - test   # Run deploy job only after test job succeeds
+          filters:
+            branches:
+              only:
+                - master  # Deploy job only runs on the master branch
