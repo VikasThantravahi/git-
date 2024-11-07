@@ -16,14 +16,7 @@ jobs:
           name: Run tests
           command: |
               echo "Hello"
-      - when:
-          condition:
-            or:
-              - equal: [circelci-project-setup, << pipeline.git.branch >>]
-          steps:
-            - run:
-                name: hello
-                command: echo "hello"
+
   deploy:
     docker:
       - image: cimg/python:3.8  # Use the same Docker image for consistency
