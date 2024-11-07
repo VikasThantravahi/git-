@@ -58,4 +58,4 @@ workflows:
           filters:
             branches:
               only:
-                - master  # Deploy job only ru
+                - circleci-project-setup  # Deploy job only ru
