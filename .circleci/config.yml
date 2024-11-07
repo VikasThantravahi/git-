@@ -11,7 +11,7 @@ jobs:
       - checkout  # Check out the code from the repo
       - when:
           condition:
-            equal: [circel-ci-projectsetup, << pipeline.git.branch >>]
+            equal: [circel-ci-project-setup, << pipeline.git.branch >>]
           steps:
             - run:
                 name: testing when condition
