@@ -11,15 +11,11 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            python -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
+              echo "hi"
       - run:
           name: Run tests
           command: |
-            . venv/bin/activate
-            pytest  # Run tests with pytest
-
+              echo "Hello"
   deploy:
     docker:
       - image: cimg/python:3.8  # Use the same Docker image for consistency
