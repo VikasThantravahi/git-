@@ -16,7 +16,7 @@ jobs:
                 command: echo "hello testing when condition sucessfully deployed"
       - when:
           condition:
-            equal: [circleci-project-setup, << pipeline.git.branch >>]
+            equal: [qa, << pipeline.git.branch >>]
           steps:
             - run:
                 name: testing second time when condition
