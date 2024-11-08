@@ -43,7 +43,7 @@ jobs:
             cat $CACHE_KEY1
       - save_cache:
           paths:
-            - /path/to/your/dir
+            - ./java-web-app-docker-master
           key: v1-cache-{{ checksum "CACHE_KEY1" }}
 
             
