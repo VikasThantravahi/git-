@@ -53,7 +53,7 @@ jobs:
       #     key: v1-{{ checksum "CACHE_KEY12" }}
       - run: |
           touch ./java-web-app-docker-master/TEST
-          echo "from cache to test vikas" >> ./java-web-app-docker-master/hello.txt
+          echo "from cache to test Anudeep" >> ./java-web-app-docker-master/hello.txt
           cat ./java-web-app-docker-master/hello.txt
           echo $(find ./java-web-app-docker-master -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  >> CACHE_KEY20
           cat CACHE_KEY20
