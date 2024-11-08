@@ -1,70 +1,35 @@
 version: 2.1
 
-# Define the jobs
 jobs:
-  test:
+  job1:
     docker:
-      - image: cimg/python:3.8  # Use a Docker image with Python pre-installed
+      - image: circleci/python:3.8
     steps:
-      - checkout  # Check out the code from the repo
+      - checkout
       - run:
-          name: checking the files inside the directory
-          command: find java-web-app-docker-master/ -type f -exec sha256sum {} + | sha256sum 
-      - when:
-          condition:
-            equal: [circleci-project-setup, << pipeline.git.branch >>]
-          steps:
-            - run:
-                name: testing when condition
-                command: echo "hello testing when condition sucessfully deployed"  > Hello.txt
-            - save_cache:
-                paths:
-                  - Hello.txt
-                key: cache--{{ checksum "Hello.txt" }}
-      - when:
-          condition:
-            equal: [qa, << pipeline.git.branch >>]
-          steps:
-            - run:
-                name: testing second time when condition
-                command: echo "when is an array here you can write multiple whens"
-      - run:
-          name: Install dependencies
-          command: |
-              echo "hi"
-      - run:
-          name: Run tests
-          command: |
-              echo "Hello"
-
-  deploy:
-    docker:
-      - image: cimg/python:3.8  # Use the same Docker image for consistency
-    steps:
-      - checkout  # Check out the code from the repo
-      - run:
-          name: Deploy the app
-          command: |
-            echo "Deploying the application..."
-            # Example: deploy command (replace with your actual deployment logic)
-            # curl -X POST -d "app=myapp" https://example.com/deploy
-      - restore_cache:
+          name: Create Hello.txt file
+          command: echo "Hello World" > Hello.txt
+      - save_cache:
+          paths:
+            - Hello.txt
           key: cache--{{ checksum "Hello.txt" }}
 
-# Define the workflows
+  job2:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - restore_cache:
+          key: cache--{{ checksum "Hello.txt" }}
+      - run:
+          name: Print Hello.txt content
+          command: cat Hello.txt
+
 workflows:
   version: 2
-  build_and_deploy:
-    when:
-      or:
-        - equal: [master, << pipeline.git.branch >>]
-        - equal: [circleci-project-setup, << pipeline.git.branch >>]
+  workflow:
     jobs:
-      - test        # Run the test job first
-      - deploy:
+      - job1
+      - job2:
           requires:
-            - test   # Run deploy job only after test job succeeds
-          filters:
-            branches:
-              only:
-                - circleci-project-setup  # Deploy job only ru
+            - job1
