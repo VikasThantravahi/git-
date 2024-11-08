@@ -54,7 +54,7 @@ jobs:
              echo "volume" > volumetesting
              echo "volume2" > volume2
       - persist_to_workspace:
-          root: ./tmp/
+          root: ./test-code/
           paths:
             - ./volumetesting
             - ./volume2
@@ -81,7 +81,7 @@ jobs:
             ls ./java-web-app-docker-master 
             ls | grep CACHE
             ls ./test-code/
-            ls /tmp/
+
             
 
 workflows:
