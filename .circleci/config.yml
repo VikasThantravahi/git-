@@ -57,6 +57,7 @@ jobs:
             ls ./java-web-app-docker-master 
             ls | grep CACHE
             ls ./test-code/   
+            ls | grep TESTCODE
 
 workflows:
   version: 2
