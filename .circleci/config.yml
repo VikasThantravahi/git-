@@ -15,7 +15,7 @@ jobs:
       - save_cache:
           paths:
             - ./1  # specify the full file path here (relative to the workspace)
-          key: hello--{{ checksum "1" }}  # Cache key based on the file
+          key: test--{{ checksum "test.txt" }}  # Cache key based on the file
 
   job2:
     docker:
@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: hello--{{ checksum "1" }}  # Restore the cache with the same key used in job1
+          key: test--{{ checksum "test.txt" }}  # Restore the cache with the same key used in job1
       - run:
           name: checking for the contents in file 1
           command: |
