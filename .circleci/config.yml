@@ -11,6 +11,7 @@ jobs:
           command:  |
             echo "Hello World" > Hello.txt
             ls -lart
+            pwd
       - save_cache:
           paths:
             - Hello.txt
@@ -25,7 +26,9 @@ jobs:
           key: cache--{{ checksum "Hello.txt" }}
       - run:
           name: Print Hello.txt content
-          command: ls -lart
+          command:  | 
+            ls -lart
+            pwd
 
 workflows:
   version: 2
