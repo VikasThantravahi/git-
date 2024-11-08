@@ -12,6 +12,7 @@ jobs:
             echo "Hello World, Hi How are you " > 1
             ls -lart
             pwd
+            cat 1
       - save_cache:
           paths:
             - ./1  # specify the full file path here (relative to the workspace)
