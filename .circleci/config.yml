@@ -76,11 +76,7 @@ jobs:
       - restore_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
       - run: |
-          cat ./java-web-app-docker-master/hello.txt
-       
-
-
-            
+          cat ./java-web-app-docker-master/hello.txt            
 
 workflows:
   version: 2
@@ -91,7 +87,7 @@ workflows:
       #     requires:
       #       - job1
       - build
-      - deploy
+      - deploy:
           requires:
             - build
             
