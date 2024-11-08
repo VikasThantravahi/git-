@@ -35,12 +35,12 @@ jobs:
       - image: circleci/python:3.9
     steps:
       - checkout
-      - run:
-          name: Calculate checksum for the directory
-          command: |
-            # Cachekey=$(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')
-            # echo $(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')  >> CACHE_KEY12
-            # cat CACHE_KEY12
+      # - run:
+      #     name: Calculate checksum for the directory
+      #     command: |
+      #       # Cachekey=$(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')
+      #       # echo $(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')  >> CACHE_KEY12
+      #       # cat CACHE_KEY12
       # - save_cache:
       #     paths:
       #       - ./java-web-app-docker-master
@@ -53,8 +53,8 @@ jobs:
       #     key: v1-{{ checksum "CACHE_KEY12" }}
 
       - run: |
-          touch ./java-web-app-docker-master/testing
-          echo "from cache" >> ./java-web-app-docker-master/hello.txt
+          touch ./java-web-app-docker-master/TEST
+          echo "from cache to test vikas" >> ./java-web-app-docker-master/hello.txt
           cat ./java-web-app-docker-master/hello.txt
           echo $(find ./java-web-app-docker-master -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  >> CACHE_KEY20
           cat CACHE_KEY20
