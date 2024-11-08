@@ -38,13 +38,13 @@ jobs:
       - run:
           name: Calculate checksum for the directory
           command: |
-            CHECKSUM=$(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')
-            echo "Checksum: $CHECKSUM"
-            echo "CACHE_KEY=$CHECKSUM" >> $BASH_ENV
+            Cachekey=$(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')
+            echo $(find ./migrations -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  >> CACHE_KEY1
+            cat $CACHE_KEY1
       - save_cache:
           paths:
             - /path/to/your/dir
-          key: v1-cache-{{ checksum "./java-web-app-docker-master" }}
+          key: v1-cache-{{ checksum "CACHE_KEY1" }}
 
             
 
