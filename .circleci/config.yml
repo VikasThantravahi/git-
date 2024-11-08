@@ -1,35 +1,35 @@
 version: 2.1
 
 jobs:
-  job1:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: Create Hello.txt file
-          command: |
-            ls -lart
-            pwd
-            export checksum=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-      - save_cache:
-          paths:
-            - ./1 # specify the full file path here (relative to the workspace)
-          key: java--{{ $checksum "1" }}  # Cache key based on the file
+  # job1:
+  #   docker:
+  #     - image: circleci/python:3.8
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Create Hello.txt file
+  #         command: |
+  #           ls -lart
+  #           pwd
+  #           export checksum=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  #     - save_cache:
+  #         paths:
+  #           - ./1 # specify the full file path here (relative to the workspace)
+  #         key: java--{{ $checksum "1" }}  # Cache key based on the file
 
-  job2:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - checkout
-      - restore_cache:
-          key: java--{{ 512 "1" }}  # Restore the cache with the same key used in job1
-      - run:
-          name: checking for the contents in file 1
-          command: |
-            ls -lart
-            pwd
-            cd 
+  # job2:
+  #   docker:
+  #     - image: circleci/python:3.8
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: java--{{ 512 "1" }}  # Restore the cache with the same key used in job1
+  #     - run:
+  #         name: checking for the contents in file 1
+  #         command: |
+  #           ls -lart
+  #           pwd
+  #           cd 
   build:
     docker:
       - image: circleci/python:3.9
@@ -41,16 +41,28 @@ jobs:
             Cachekey=$(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')
             echo $(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')  >> CACHE_KEY12
             cat CACHE_KEY12
+      # - save_cache:
+      #     paths:
+      #       - ./java-web-app-docker-master
+      #     key: v1-{{ checksum "CACHE_KEY12" }}
+      # - run:
+      #     name: check
+      #     command: |
+      #         touch ./java-web-app-docker-master/hello.txt
+      # - restore_cache:
+      #     key: v1-{{ checksum "CACHE_KEY12" }}
+
+      - run: |
+          echo $(find ./java-web-app-docker-master -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  >> CACHE_KEY15
+      - run: cat CACHE_KEY15
       - save_cache:
+          key: test-cache-v1-{{ checksum "CACHE_KEY15" }}
           paths:
-            - ./java-web-app-docker-master
-          key: v1-{{ checksum "CACHE_KEY12" }}
-      - run:
-          name: check
-          command: |
-              touch ./java-web-app-docker-master/hello.txt
+            - java-web-app-docker-master
       - restore_cache:
-          key: v1-{{ checksum "CACHE_KEY12" }}
+          key: test-cache-v1-{{ checksum "CACHE_KEY15" }}
+
+
 
             
 
@@ -58,8 +70,8 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - job1
-      - job2:
-          requires:
-            - job1
+      # - job1
+      # - job2:
+      #     requires:
+      #       - job1
       - build
