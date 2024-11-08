@@ -15,7 +15,7 @@ jobs:
       - save_cache:
           paths:
             - Hello.txt
-          key: cache--{{ checksum "Hello.txt" }}
+          key: hello--{{ checksum "Hello.txt" }}
 
   job2:
     docker:
@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: cache--{{ checksum "Hello.txt" }}
+          key: hello--{{ checksum "Hello.txt" }}
       - run:
           name: Print Hello.txt content
           command:  | 
