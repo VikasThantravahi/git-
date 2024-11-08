@@ -13,8 +13,8 @@ jobs:
             pwd
       - save_cache:
           paths:
-            - ./java-web-app-docker-master # specify the full file path here (relative to the workspace)
-          key: java--{{ checksum "./java-web-app-docker-master" }}  # Cache key based on the file
+            - ./1 # specify the full file path here (relative to the workspace)
+          key: java--{{ 512 "1" }}  # Cache key based on the file
 
   job2:
     docker:
@@ -22,7 +22,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: java--{{ checksum "./java-web-app-docker-master" }}  # Restore the cache with the same key used in job1
+          key: java--{{ 512 "1" }}  # Restore the cache with the same key used in job1
       - run:
           name: checking for the contents in file 1
           command: |
