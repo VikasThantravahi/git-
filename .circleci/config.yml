@@ -8,29 +8,29 @@ jobs:
       - checkout
       - run:
           name: Create Hello.txt file
-          command:  |
-            echo "Hello World, Hi How are you " >> 1
+          command: |
+            echo "Hello World, Hi How are you " > 1
             ls -lart
             pwd
       - save_cache:
           paths:
-            - 1
-          key: Hi--{{ checksum "1" }}
+            - ./1  # specify the full file path here (relative to the workspace)
+          key: hello--{{ checksum "1" }}  # Cache key based on the file
+
   job2:
     docker:
       - image: circleci/python:3.8
     steps:
       - checkout
       - restore_cache:
-          key: Hi--{{ checksum "1" }}
+          key: hello--{{ checksum "1" }}  # Restore the cache with the same key used in job1
       - run:
           name: checking for the contents in file 1
-          command:  | 
+          command: |
             ls -lart
             pwd
+            cat 1  # Checking the contents of the file "1"
 
-
- 
 workflows:
   version: 2
   workflow:
