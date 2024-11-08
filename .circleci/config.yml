@@ -29,7 +29,6 @@ jobs:
           command:  | 
             ls -lart
             pwd
-            cat 1
 
 workflows:
   version: 2
