@@ -41,6 +41,28 @@ jobs:
           paths:
             - ./CACHE_KEY20
             - ./TESTCODE
+
+
+  volumes:
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: adding new files to volumetest
+          command: |
+             echo "volume" > volumetesting
+             echo "volume2" > volume2
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./volumetesting
+            - ./volume2
+
+
+    
+
+
   deploy:
     docker:
       - image: circleci/python:3.9
@@ -58,6 +80,7 @@ jobs:
             ls | grep CACHE
             ls ./test-code/   
             ls | grep TESTCODE
+            ls | grep volume
 
 workflows:
   version: 2
