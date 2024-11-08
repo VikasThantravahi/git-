@@ -78,9 +78,10 @@ jobs:
             cat ./java-web-app-docker-master/hello.txt
             ls ./java-web-app-docker-master 
             ls | grep CACHE
-            ls ./test-code/   
+            ls ./test-code/
+            ls
             ls | grep TESTCODE
-            ls | grep volume
+            
 
 workflows:
   version: 2
