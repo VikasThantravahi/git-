@@ -30,6 +30,30 @@ jobs:
             ls -lart
             pwd
             cd 
+  build:
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: Calculate checksum for the directory
+          command: |
+            CHECKSUM=$(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')
+            echo "Checksum: $CHECKSUM"
+            echo "CACHE_KEY=$CHECKSUM" >> $BASH_ENV
+      - restore_cache:
+          keys:
+            - v1-cache-{{ checksum "./java-web-app-docker-master" }}
+            - v1-cache-
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r requirements.txt
+      - save_cache:
+          paths:
+            - /path/to/your/dir
+          key: v1-cache-{{ checksum "./java-web-app-docker-master" }}
+
             
 
 workflows:
@@ -40,3 +64,4 @@ workflows:
       - job2:
           requires:
             - job1
+      - build
