@@ -14,7 +14,7 @@ jobs:
             pwd
       - save_cache:
           paths:
-            - ./1  # specify the full file path here (relative to the workspace)
+            - 1  # specify the full file path here (relative to the workspace)
           key: hello--{{ checksum "1" }}  # Cache key based on the file
 
   job2:
