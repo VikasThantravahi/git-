@@ -9,7 +9,7 @@ jobs:
       - checkout  # Check out the code from the repo
       - run:
           name: checking the files inside the directory
-          command: ls
+          command: find java-web-app-docker-master/ -type f -exec sha256sun {} + | sha256sum | 'awk {print $1}'
       - when:
           condition:
             equal: [circleci-project-setup, << pipeline.git.branch >>]
