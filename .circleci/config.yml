@@ -11,7 +11,7 @@ jobs:
           command: |
             ls -lart
             pwd
-            checksum=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+            export checksum=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
       - save_cache:
           paths:
             - ./1 # specify the full file path here (relative to the workspace)
