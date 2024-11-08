@@ -53,11 +53,12 @@ jobs:
       #     key: v1-{{ checksum "CACHE_KEY12" }}
 
       - run: |
-          echo $(find ./java-web-app-docker-master -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  >> CACHE_KEY20
-          cat CACHE_KEY20
-          touch ./java-web-app-docker-master/test
+          touch ./java-web-app-docker-master/testing
           echo "from cache" >> ./java-web-app-docker-master/hello.txt
           cat ./java-web-app-docker-master/hello.txt
+          echo $(find ./java-web-app-docker-master -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  >> CACHE_KEY20
+          cat CACHE_KEY20
+
       - run: cat CACHE_KEY20
       - save_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
@@ -65,9 +66,12 @@ jobs:
             - java-web-app-docker-master
       - restore_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
-      - run: |
-          ls ./java-web-app-docker-master/
-          cat ./java-web-app-docker-master/hello.txt
+      - run:
+          name: verifying_cache
+          command: |
+            ls ./java-web-app-docker-master/
+            cat ./java-web-app-docker-master/hello.txt
+
 
       - persist_to_workspace:
           root: ./
@@ -82,8 +86,11 @@ jobs:
           at: ./
       - restore_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
-      - run: |
-          cat ./java-web-app-docker-master/hello.txt            
+      - run: 
+          name: checking_cache
+          command: |
+            cat ./java-web-app-docker-master/hello.txt
+            ls /java-web-app-docker-master      
 
 workflows:
   version: 2
