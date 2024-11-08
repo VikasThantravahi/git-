@@ -38,9 +38,9 @@ jobs:
       - run:
           name: Calculate checksum for the directory
           command: |
-            Cachekey=$(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')
-            echo $(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')  >> CACHE_KEY12
-            cat CACHE_KEY12
+            # Cachekey=$(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')
+            # echo $(find java-web-app-docker-master -type f -exec sha256sum {} + | sha256sum | awk '{print $1}')  >> CACHE_KEY12
+            # cat CACHE_KEY12
       # - save_cache:
       #     paths:
       #       - ./java-web-app-docker-master
@@ -57,11 +57,11 @@ jobs:
           cat CACHE_KEY20
       - run: cat CACHE_KEY20
       - save_cache:
-          key: test-cache-v1-{{ checksum "CACHE_KEY20" }}
+          key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
           paths:
             - java-web-app-docker-master
       - restore_cache:
-          key: test-cache-v1-{{ checksum "CACHE_KEY20" }}
+          key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
 
 
 
