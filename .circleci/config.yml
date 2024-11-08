@@ -17,19 +17,7 @@ jobs:
             - 1
           key: hello--{{ checksum "1" }}
 
-  job2:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - checkout
-      - restore_cache:
-          key: hello--{{ checksum "1" }}
-      - run:
-          name: checking for the contents in file 1
-          command:  | 
-            ls -lart
-            pwd
-
+ 
 workflows:
   version: 2
   workflow:
