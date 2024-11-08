@@ -45,6 +45,12 @@ jobs:
           paths:
             - ./java-web-app-docker-master
           key: v1-{{ checksum "CACHE_KEY12" }}
+      - run:
+          name: check
+          command: |
+              touch ./java-web-app-docker-master/hello.txt
+      - restore_cache:
+          key: v1-{{ checksum "CACHE_KEY12" }}
 
             
 
