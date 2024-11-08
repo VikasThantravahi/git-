@@ -51,7 +51,6 @@ jobs:
       #         touch ./java-web-app-docker-master/hello.txt
       # - restore_cache:
       #     key: v1-{{ checksum "CACHE_KEY12" }}
-
       - run: |
           touch ./java-web-app-docker-master/TEST
           echo "from cache to test vikas" >> ./java-web-app-docker-master/hello.txt
