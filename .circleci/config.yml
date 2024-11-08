@@ -20,7 +20,7 @@ jobs:
             - save_cache:
                 paths:
                   - Hello.txt
-                key: cache--{{checksum "Hello.txt"}}
+                key: cache--{{ checksum "Hello.txt" }}
       - when:
           condition:
             equal: [qa, << pipeline.git.branch >>]
@@ -49,7 +49,7 @@ jobs:
             # Example: deploy command (replace with your actual deployment logic)
             # curl -X POST -d "app=myapp" https://example.com/deploy
       - restore_cache:
-          key: cache--{{checksum "Hello.txt"}}
+          key: cache--{{ checksum "Hello.txt" }}
 
 # Define the workflows
 workflows:
