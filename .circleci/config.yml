@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Create Hello.txt file
           command: |
-            echo "Hello World, Hi How are you " > 1
+            #echo "Hello World, Hi How are you " > 1
             ls -lart
             pwd
             cat 1
