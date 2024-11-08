@@ -55,8 +55,9 @@ jobs:
       - run: |
           echo $(find ./java-web-app-docker-master -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  >> CACHE_KEY20
           cat CACHE_KEY20
-          touch ./java-web-app-docker-master/test.txt
-          ls -lart ./java-web-app-docker-master/
+          touch ./java-web-app-docker-master/test
+          echo "from cache" >> ./java-web-app-docker-master/hello.txt
+          cat ./java-web-app-docker-master/hello.txt
       - run: cat CACHE_KEY20
       - save_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
@@ -66,7 +67,17 @@ jobs:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
       - run: |
           ls ./java-web-app-docker-master/
-
+          cat ./java-web-app-docker-master/hello.txt
+  deploy:
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      - checkout
+      - restore_cache:
+          key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
+      - run: |
+          cat ./java-web-app-docker-master/hello.txt
+       
 
 
             
@@ -80,3 +91,7 @@ workflows:
       #     requires:
       #       - job1
       - build
+      - deploy
+          requires:
+            - build
+            
