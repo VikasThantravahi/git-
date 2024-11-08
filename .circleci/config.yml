@@ -70,6 +70,8 @@ jobs:
           command: |
             ls ./java-web-app-docker-master/
             cat ./java-web-app-docker-master/hello.txt
+            ls 
+            ls | grep CACHE
 
 
       - persist_to_workspace:
