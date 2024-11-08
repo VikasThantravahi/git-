@@ -90,7 +90,7 @@ jobs:
           name: checking_cache
           command: |
             cat ./java-web-app-docker-master/hello.txt
-            ls /java-web-app-docker-master      
+            ls ./java-web-app-docker-master      
 
 workflows:
   version: 2
