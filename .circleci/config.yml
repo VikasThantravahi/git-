@@ -8,7 +8,9 @@ jobs:
       - checkout
       - run:
           name: Create Hello.txt file
-          command: echo "Hello World" > Hello.txt
+          command:  |
+            echo "Hello World" > Hello.txt
+            ls -lart
       - save_cache:
           paths:
             - Hello.txt
@@ -23,7 +25,7 @@ jobs:
           key: cache--{{ checksum "Hello.txt" }}
       - run:
           name: Print Hello.txt content
-          command: cat Hello.txt
+          command: ls -lart
 
 workflows:
   version: 2
