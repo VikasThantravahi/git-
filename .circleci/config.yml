@@ -13,7 +13,7 @@ jobs:
           echo "from cache to test Anudeep" >> ./java-web-app-docker-master/HELLO.txt
           cat ./java-web-app-docker-master/HELLO.txt
           echo "from cache to test Anudeep Dachepalli" >> ./java-web-app-docker-master/HELLO.txt
-          echo "from cache to test" >> ./test-code/how.txt
+          echo "from cache to test 2 caches" >> ./test-code/how.txt
           echo $(find ./java-web-app-docker-master -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  > CACHE_KEY20
           echo $(find ./test-code -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  > TESTCODE
           cat CACHE_KEY20
@@ -35,13 +35,13 @@ jobs:
             ls 
             ls | grep CACHE
             ls ./test-code/
+            cat ./test-code/how.txt
 
       - persist_to_workspace:
           root: ./
           paths:
             - ./CACHE_KEY20
             - ./TESTCODE
-
 
   # volumes:
   #   docker:
