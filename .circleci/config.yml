@@ -41,23 +41,23 @@ jobs:
             - ./CACHE_KEY20
             - ./TESTCODE
 
-  # volumes:
-  #   docker:
-  #     - image: circleci/python:3.9
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: adding new files to volumetest
-  #         command: |
-  #            echo "volume" > volumetesting
-  #            echo "volume2" > volume2
-  #            ls 
-  #            pwd
-  #     - persist_to_workspace:
-  #         root: ./
-  #         paths:
-  #           - ./volumetesting
-  #           - ./volume2
+  volumes:
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: adding new files to volumetest
+          command: |
+             echo "volume" > volumetesting
+             echo "volume2" > volume2
+             ls 
+             pwd
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./volumetesting
+            - ./volume2
 
   deploy:
     docker:
@@ -66,12 +66,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./
-      # - attach_workspace:
-      #     at: /tmp
+      - attach_workspace:
+          at: /tmp
 
-      # - run:
-      #     name: checking attachment of volumes
-      #     commmand: ls /tmp
+
       - restore_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}___{{ checksum "TESTCODE" }}
       - run: 
@@ -82,7 +80,10 @@ jobs:
             ls | grep CACHE
             ls ./test-code/
             cat ./test-code/how.txt
-
+      - run:
+          name: checking attachment of volumes
+          commmand: ls /tmp
+      
             
 
 workflows:
