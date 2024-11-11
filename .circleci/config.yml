@@ -69,9 +69,9 @@ jobs:
       # - attach_workspace:
       #     at: /tmp
 
-      - run:
-          name: checking attachment of volumes
-          commmand: ls /tmp
+      # - run:
+      #     name: checking attachment of volumes
+      #     commmand: ls /tmp
       - restore_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}___{{ checksum "TESTCODE" }}
       - run: 
