@@ -53,15 +53,13 @@ jobs:
           command: |
              echo "volume" > volumetesting
              echo "volume2" > volume2
+             ls 
+             pwd
       - persist_to_workspace:
           root: ./test-code/
           paths:
             - ./volumetesting
             - ./volume2
-
-
-    
-
 
   deploy:
     docker:
