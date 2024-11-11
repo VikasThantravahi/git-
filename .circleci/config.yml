@@ -97,5 +97,6 @@ workflows:
       - deploy:
           requires:
             - build
+            - volumes
       - volumes
             
