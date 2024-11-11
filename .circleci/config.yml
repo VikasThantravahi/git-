@@ -58,7 +58,7 @@ jobs:
           paths:
             - ./volumetesting
             - ./volume2
-
+      
   deploy:
     docker:
       - image: circleci/python:3.9
@@ -80,9 +80,8 @@ jobs:
             ls | grep CACHE
             ls ./test-code/
             cat ./test-code/how.txt
-      - run:
-          name: checking attachment of volumes
-          commmand: ls /tmp
+            ls -lart /tmp
+
       
             
 
