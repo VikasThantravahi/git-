@@ -67,8 +67,8 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./
-      - attach_workspace:
-          at: /tmp
+      # - attach_workspace:
+      #     at: /tmp
 
       - run:
           name: checking attachment of volumes
