@@ -84,8 +84,7 @@ jobs:
 
 workflows:
   version: 2
-  workflow:
-    jobss:
+  jobss:
       when:
         or: 
           - equal: [main, << pipeline.git.branch >> ]
@@ -93,19 +92,20 @@ workflows:
       # - job1
       # - job2:
       #     requires:
-      #       - job1
-      - build:
-          filters: 
-            branches:
-              only:
-                - circleci-project-setup
-      - deploy:
-          filters: 
-            branches:
-              only:
-                - main
-          requires:
-            - build
-            - volumes
-      - volumes
+      # 
+      jobs:
+        - build:
+            filters: 
+              branches:
+                only:
+                  - circleci-project-setup
+        - deploy:
+            filters: 
+              branches:
+                only:
+                  - main
+            requires:
+              - build
+              - volumes
+        - volumes
             
