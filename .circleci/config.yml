@@ -85,11 +85,11 @@ jobs:
 workflows:
   version: 2
   workflow:
-    jobs:
+    jobss:
       when:
         or: 
-          equal: 
-            - [main, << pipeline.git.branch >> ]
+          - equal: [main, << pipeline.git.branch >> ]
+    
       # - job1
       # - job2:
       #     requires:
