@@ -35,7 +35,7 @@ jobs:
             ls 
             ls | grep CACHE
             ls ./test-code/
-            cat ./test-code/how.txt
+    
 
       - persist_to_workspace:
           root: ./
@@ -79,6 +79,7 @@ jobs:
             ls ./java-web-app-docker-master 
             ls | grep CACHE
             ls ./test-code/
+            cat ./test-code/how.txt
 
             
 
