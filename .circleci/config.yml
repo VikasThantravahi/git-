@@ -68,19 +68,18 @@ jobs:
           at: ./
       - attach_workspace:
           at: /tmp
-
-
       - restore_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}___{{ checksum "TESTCODE" }}
       - run: 
           name: checking_cache
           command: |
+            ls -lart
             cat ./java-web-app-docker-master/hello.txt
             ls ./java-web-app-docker-master 
-            ls | grep CACHE
-            ls ./test-code/
             cat ./test-code/how.txt
-            ls -lart /tmp          
+            ls -lart /tmp
+
+
 
 workflows:
   version: 2
