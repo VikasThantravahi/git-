@@ -35,7 +35,6 @@ jobs:
             ls 
             ls | grep CACHE
             ls ./test-code/
-    
 
       - persist_to_workspace:
           root: ./
@@ -69,7 +68,11 @@ jobs:
       - attach_workspace:
           at: ./
       - attach_workspace:
-          at: ./tmp
+          at: /tmp
+
+      - run:
+          name: checking attachment of volumes
+          commmand: ls /tmp
       - restore_cache:
           key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}___{{ checksum "TESTCODE" }}
       - run: 
