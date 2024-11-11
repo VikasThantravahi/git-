@@ -90,7 +90,11 @@ workflows:
       # - job2:
       #     requires:
       #       - job1
-      - build
+      - build:
+          filters: 
+            branches:
+              only:
+                - main
       - deploy:
           filters: 
             branches:
