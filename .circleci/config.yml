@@ -84,6 +84,30 @@ jobs:
 
 workflows:
   version: 2
+  jobssanu:
+      when:
+        or: 
+          - equal: [circleci-project-setup, << pipeline.git.branch >> ]
+    
+      # - job1
+      # - job2:
+      #     requires:
+      # 
+      jobs:
+        - build:
+            filters: 
+              branches:
+                only:
+                  - circleci-project-setup
+        - deploy:
+            filters: 
+              branches:
+                only:
+                  - main
+            requires:
+              - build
+              - volumes
+        - volumes
   jobss:
       when:
         or: 
