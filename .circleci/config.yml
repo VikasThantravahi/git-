@@ -80,10 +80,7 @@ jobs:
             ls | grep CACHE
             ls ./test-code/
             cat ./test-code/how.txt
-            ls -lart /tmp
-
-      
-            
+            ls -lart /tmp          
 
 workflows:
   version: 2
