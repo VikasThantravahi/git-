@@ -92,6 +92,10 @@ workflows:
       #       - job1
       - build
       - deploy:
+          fiters: 
+            branches:
+              only:
+                - main
           requires:
             - build
             - volumes
