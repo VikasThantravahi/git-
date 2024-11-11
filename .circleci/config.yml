@@ -85,7 +85,7 @@ jobs:
 workflows:
   version: 2
   workflow:
-    jobss:
+    jobs:
       when:
         or: 
           equal: 
