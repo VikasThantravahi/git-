@@ -92,7 +92,7 @@ workflows:
       #       - job1
       - build
       - deploy:
-          fiters: 
+          filters: 
             branches:
               only:
                 - main
