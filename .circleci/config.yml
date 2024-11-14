@@ -12,7 +12,7 @@ jobs:
           name:  printing echo commands
           command: |
            echo "hello"
-           echo "hello world:
+           echo "hello world"
       - when:
           condition:
             or:
