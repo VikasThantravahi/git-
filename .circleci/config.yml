@@ -22,6 +22,15 @@ jobs:
               name: verfiying the when conditon
               command: |
                  echo "heloo in when condition"
+      - when:
+          condition:
+            or:
+              - equal: [circleci-project-setup, << pipeline.git.branch >>]
+          steps:
+          - run:
+              name: verfiying the when conditon
+              command: |
+                 echo "Hello from when condition  2"
 
 
   volumes:
