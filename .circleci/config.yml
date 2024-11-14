@@ -16,7 +16,7 @@ jobs:
       - when:
           condition:
             or:
-              - equal: [staging, << pipeline.git.branch >>]
+              - equal: [circleci-project-setup, << pipeline.git.branch >>]
           steps:
           - run:
               name: verfiying the when conditon
