@@ -8,38 +8,21 @@ jobs:
     steps:
       - checkout
 
-      - run: |
-          touch ./java-web-app-docker-master/TESTING
-          echo "from cache to test Anudeep" >> ./java-web-app-docker-master/HELLO.txt
-          cat ./java-web-app-docker-master/HELLO.txt
-          echo "from cache to test Anudeep Dachepalli" >> ./java-web-app-docker-master/HELLO.txt
-          echo "from cache to test 2 caches" >> ./test-code/how.txt
-          echo $(find ./java-web-app-docker-master -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  > CACHE_KEY20
-          echo $(find ./test-code -type f -exec md5sum {} \; | md5sum | cut -d' ' -f1)  > TESTCODE
-          cat CACHE_KEY20
-          cat TESTCODE
+      - run: 
+        name:  printing echo commands
+        command: |
+          echo "hello"
+          echo "hello world:
+      - when:
+          condition:
+            or:
+              - equal: [staging, << pipelien.git.branch >>]
+          steps:
+          - run:
+              name: verfiying the when conditon
+              command: |
+                 echo "heloo in when condition"
 
-      - run: cat CACHE_KEY20
-      - save_cache:
-          key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}___{{ checksum "TESTCODE" }}
-          paths:
-            - java-web-app-docker-master
-            - test-code
-      - restore_cache:
-          key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}
-      - run:
-          name: verifying_cache
-          command: |
-            ls ./java-web-app-docker-master/
-            cat ./java-web-app-docker-master/hello.txt
-            ls 
-            ls | grep CACHE
-            ls ./test-code/
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - ./CACHE_KEY20
-            - ./TESTCODE
 
   volumes:
     docker:
@@ -68,17 +51,10 @@ jobs:
           at: ./
       - attach_workspace:
           at: /tmp
-      - restore_cache:
-          key: tested-cache-v1-{{ checksum "CACHE_KEY20" }}___{{ checksum "TESTCODE" }}
       - run: 
           name: checking_cache
           command: |
             pwd
-            ls -lart
-            cat ./java-web-app-docker-master/hello.txt
-            ls ./java-web-app-docker-master 
-            cat ./test-code/how.txt
-            ls -lart /tmp
 
 
 
