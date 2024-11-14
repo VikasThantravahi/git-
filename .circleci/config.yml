@@ -9,10 +9,10 @@ jobs:
       - checkout
 
       - run: 
-        name:  printing echo commands
-        command: |
-          echo "hello"
-          echo "hello world:
+          name:  printing echo commands
+          command: |
+           echo "hello"
+           echo "hello world:
       - when:
           condition:
             or:
