@@ -1,120 +1,29 @@
 version: 2.1
-
+orbs:
+  slack: circleci/slack@4.9.3
 jobs:
- 
-  build:
+  notify:
     docker:
-      - image: circleci/python:3.9
+      - image: cimg/base:current
     steps:
-      - checkout
-
-      - run: 
-          name:  printing echo commands
-          command: |
-           echo "hello"
-           echo "hello world"
-      - when:
-          condition:
-            or:
-              - equal: [main, << pipeline.git.branch >>]
-          steps:
-          - run:
-              name: verfiying the when conditon
-              command: |
-                 echo "heloo in when condition"
-      - when:
-          condition:
-            or:
-              - equal: [circleci-project-setup, << pipeline.git.branch >>]
-          steps:
-          - run:
-              name: verfiying the when conditon
-              command: |
-                 echo "Hello from when condition  2"
-
-
-  volumes:
-    docker:
-      - image: circleci/python:3.9
-    steps:
-      - checkout
-      - run:
-          name: adding new files to volumetest
-          command: |
-             echo "volume" > volumetesting
-             echo "volume2" > volume2
-             ls 
-             pwd
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - ./volumetesting
-            - ./volume2
-      
-  deploy:
-    docker:
-      - image: circleci/python:3.9
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - attach_workspace:
-          at: /tmp
-      - run: 
-          name: checking_cache
-          command: |
-            pwd
-
-
-
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*This is a text notification*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
 workflows:
-  version: 2
-  jobssanu:
-      when:
-        or: 
-          - equal: [circleci-project-setup, << pipeline.git.branch >> ]
-    
-      # - job1
-      # - job2:
-      #     requires:
-      # 
-      jobs:
-        - build:
-            filters: 
-              branches:
-                only:
-                  - circleci-project-setup
-        - deploy:
-            filters: 
-              branches:
-                only:
-                  - main
-            requires:
-              - build
-              - volumes
-        - volumes
-  jobss:
-      when:
-        or: 
-          - equal: [main, << pipeline.git.branch >> ]
-    
-      # - job1
-      # - job2:
-      #     requires:
-      # 
-      jobs:
-        - build:
-            filters: 
-              branches:
-                only:
-                  - circleci-project-setup
-        - deploy:
-            filters: 
-              branches:
-                only:
-                  - main
-            requires:
-              - build
-              - volumes
-        - volumes
-            
+  send-notification:
+    jobs:
+      - notify
