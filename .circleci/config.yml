@@ -41,7 +41,7 @@ jobs:
           command: echo "Hello from CircleCI!"
           
       # Notify Slack on failure (move slack notify after steps)
-      - slack/notify:
+      - notify:
           event: fail
           template: basic_fail_1
 
