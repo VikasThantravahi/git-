@@ -26,7 +26,7 @@ jobs:
     steps:
       - run:
           name: Check Python version
-          command: python --version
+          command: python -version
 
   slack_notification:
     docker:
