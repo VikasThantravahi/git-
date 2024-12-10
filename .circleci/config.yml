@@ -6,8 +6,8 @@ orbs:
 executors:
   linux-executor:
     docker:
-      - image: cimg/python:3.9  # Use a Docker image with Python (you can choose any image you prefer )
-    working_directory: ~/workspace  # Set the working directory for your projects
+      - image: cimg/python:3.9  # Use a Docker image with Python (you can choose any image you prefer)
+    working_directory: ~/workspace  # Set the working directory for your project
 
 jobs:
   build:
@@ -39,11 +39,6 @@ jobs:
       - run:
           name: Echo a message
           command: echo "Hello from CircleCI!"
-          
-      # Notify Slack on failure (move slack notify after steps)
-      - notify:
-          event: fail
-          template: basic_fail_1
 
   test:
     executor: linux-executor
@@ -53,6 +48,17 @@ jobs:
           name: Check Python version
           command: python --version
 
+  # Job to notify on success or failure
+  slack_notification:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      # Notify Slack on success or failure
+      - slack/notify:
+          event: always  # This will notify on both success and failure
+          template: basic_fail_1  # Template for failure (can use basic_success_1 for success)
+          context: slack-secrets  # Make sure this context contains SLACK_ACCESS_TOKEN
+
 workflows:
   version: 2
   build_and_test:
@@ -61,5 +67,8 @@ workflows:
       - test:
           requires:
             - build
-      - notify:
-          context: slack-secrets
+      - slack_notification:
+          requires:
+            - build
+            - test
+
