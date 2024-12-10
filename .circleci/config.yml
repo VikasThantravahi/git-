@@ -45,8 +45,8 @@ jobs:
           name: Check Python version
           command: python --version
       - slack/notify:
-	        event: pass
-	        template: success_tagged_deploy_1
+	  event: pass
+          template: success_tagged_deploy_1
 
 workflows:
   version: 2
