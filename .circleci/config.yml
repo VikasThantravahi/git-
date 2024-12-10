@@ -60,4 +60,8 @@ workflows:
             - build
             - test
           context: slack-secrets
-          when: always()
+          filters:
+            branches:
+              only:
+                - main # Only run on the main branch, you can adjust this for your use case
+          when: always()  
