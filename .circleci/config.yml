@@ -42,11 +42,7 @@ workflows:
     jobs:
       - build
       - test
-      - slack_notification:
-          requires:
-            - build
-            - test
-          context: slack-secrets
+
 
 
 
