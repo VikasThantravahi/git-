@@ -68,6 +68,7 @@ workflows:
           requires:
             - build
       - slack_notification:
+          context: slack-secrets
           requires:
             - build
 
