@@ -1,4 +1,5 @@
 version: 2.1
+
 orbs:
   slack: circleci/slack@4.9.3
 
@@ -38,9 +39,12 @@ jobs:
       - run:
           name: Echo a message
           command: echo "Hello from CircleCI!"
+          
+      # Notify Slack on failure (move slack notify after steps)
       - slack/notify:
-	        event: fail
-	        template: basic_fail_1
+          event: fail
+          template: basic_fail_1
+
   test:
     executor: linux-executor
     steps:
@@ -48,7 +52,6 @@ jobs:
       - run:
           name: Check Python version
           command: python --version
-
 
 workflows:
   version: 2
@@ -58,5 +61,3 @@ workflows:
       - test:
           requires:
             - build
-      - notify:
-          context: slack-secrets
