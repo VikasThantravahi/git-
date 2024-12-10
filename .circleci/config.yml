@@ -6,7 +6,7 @@ orbs:
 executors:
   linux-executor:
     docker:
-      - image: cimg/python:3.9  # Use a Docker image with Python (you can choose any image you prefer)
+      - image: cimg/python:3.9  # Use a Docker image with Python (you can choose any image you prefer )
     working_directory: ~/workspace  # Set the working directory for your projects
 
 jobs:
