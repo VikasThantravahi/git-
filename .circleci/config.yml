@@ -46,7 +46,7 @@ jobs:
       # Run some basic test or command (example: test Python version)
       - run:
           name: Check Python version
-          command: python --version
+          command: python --=version
 
   slack_notification:
     docker:
@@ -65,8 +65,6 @@ workflows:
     jobs:
       - build
       - test:
-          requires:
-            - build
       - slack_notification:
           context: slack-secrets
     
