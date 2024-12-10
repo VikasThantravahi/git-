@@ -45,7 +45,6 @@ jobs:
       - slack/notify:
           event: always  # Run this step regardless of the workflow status
           template: custom_notification  # Use a custom template
-          context: slack-secrets
           customizations:
             - key: status
               value: "${CIRCLE_BUILD_STATUS}"
