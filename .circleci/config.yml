@@ -43,11 +43,11 @@ jobs:
       - image: cimg/base:current
     steps:
       - slack/notify:
-          event: always  # Run this step regardless of the workflow status
-          template: custom_notification  # Use a custom template
-          customizations:
-            - key: status
-              value: "${CIRCLE_BUILD_STATUS}"
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
   version: 2
