@@ -45,7 +45,6 @@ jobs:
       - slack/notify:
           event: always
           template: custom_notification  # Use a custom template
-          context: slack-secrets
 
 workflows:
   version: 2
