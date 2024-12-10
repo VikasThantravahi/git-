@@ -60,3 +60,4 @@ workflows:
             - build
             - test
           context: slack-secrets
+          when: always()
