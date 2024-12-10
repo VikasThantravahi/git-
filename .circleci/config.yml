@@ -48,17 +48,16 @@ jobs:
           name: Check Python version
           command: python --version
 
-  # Job to notify on success or failure
-  slack_notification:
+  notify:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/base:current
     steps:
-      # Notify Slack on success or failure
-      - slack/notify:
-          event: always  # This will notify on both success and failure
-          template: basic_fail_1  # Template for failure (can use basic_success_1 for success)
-          context: slack-secrets  # Make sure this context contains SLACK_ACCESS_TOKEN
-
+- slack/notify:
+	  event: fail
+	  template: basic_fail_1
+- slack/notify:
+	  event: pass
+	  template: success_tagged_deploy_1
 workflows:
   version: 2
   build_and_test:
