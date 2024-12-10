@@ -68,9 +68,8 @@ workflows:
       - slack_notification:
           requires:
             - build
-            - test
           context: slack-secrets
-          when: always  # Ensure slack_notification runs no matter what
+ # Ensure slack_notification runs no matter what
 
 
 
