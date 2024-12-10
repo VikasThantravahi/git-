@@ -15,7 +15,7 @@ jobs:
     steps:
       # Checkout the code from your repository
       - checkout
-      
+
       # Update the system and install sample packages
       - run:
           name: Update system and install curl
@@ -48,16 +48,17 @@ jobs:
           name: Check Python version
           command: python --version
 
-  notify:
+  slack_notification:
     docker:
       - image: cimg/base:current
     steps:
-- slack/notify:
-	  event: fail
-	  template: basic_fail_1
-- slack/notify:
-	  event: pass
-	  template: success_tagged_deploy_1
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
 workflows:
   version: 2
   build_and_test:
@@ -69,5 +70,5 @@ workflows:
       - slack_notification:
           requires:
             - build
-            - test
+
 
