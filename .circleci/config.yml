@@ -1,60 +1,40 @@
 version: 2.1
+
+slack-fail-post-step: &slack-fail-post-step
+  post-steps:
+    - slack/status:
+        fail_only: true
+
 orbs:
-  slack: circleci/slack@5.1.1
+  slack: circleci/slack@3.4.2
 
 jobs:
-  job1:
+  build:
     docker:
       - image: cimg/base:stable
-    steps:
-      - run:
-          name: Success
-          command: |
-            echo "hi
-
-  job2:
-    docker:
-      - image: cimg/base:stable
+      
     steps:
       - run:
           name: Success
           command: |
             echo "hi"
-
-  notify:
+  last-job:
     docker:
       - image: cimg/base:stable
+      
     steps:
-      - slack/notify:
-          event: always
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*Pipeline Completed*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-
+      - run:
+          name: Success
+          command: |
+            echo "hello"
+  
 workflows:
   version: 2
-  your-workflow:
+  workflow:
     jobs:
-      - job1
-      - job2
-      - slack/on-hold:
+      - build: *slack-fail-post-step
+      - last-job:
           requires:
-            - job1
-            - job2
-          context: slack-secrets
-      - notify:
-          requires:
-            - slack/on-hold
-          context: slack-secrets
+            - build
+          post-steps:
+            - slack/status
