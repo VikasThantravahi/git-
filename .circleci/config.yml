@@ -38,3 +38,4 @@ workflows:
             - build
           post-steps:
             - slack/status
+          context: slack-secrets
