@@ -1,57 +1,65 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@4.2.1  # Specify the version you want to use
+
 jobs:
-  job1:
+  build:
     docker:
       - image: circleci/python:3.8
     steps:
+      - checkout
       - run:
-          name: Run job 1
-          command: |
-            echo "Running job 1"
-            exit 1  # Simulate failure
+          name: Install dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Run tests
+          command: pytest
 
-  job2:
+  notify_pass:
     docker:
       - image: circleci/python:3.8
     steps:
-      - run:
-          name: Run job 2
-          command: |
-            echo "Running job 2"
-            exit 0  # Simulate success
+      - slack/notify:
+          channel: "#build-notifications"
+          event: pass  # Only sends when build passes
+          custom: |
+            {
+              "text": ":white_check_mark: Build Passed! :tada: ",
+              "attachments": [
+                {
+                  "text": "The build has completed successfully. Good job!"
+                }
+              ]
+            }
 
-  job3:
+  notify_fail:
     docker:
       - image: circleci/python:3.8
     steps:
-      - run:
-          name: Run job 3
-          command: |
-            echo "Running job 3"
-            exit 0  # Simulate success
-
-  final_job:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - run:
-          name: Always run this job
-          command: echo "This job runs no matter what!"
+      - slack/notify:
+          channel: "#build-notifications"
+          event: fail  # Only sends when build fails
+          custom: |
+            {
+              "text": ":x: Build Failed! :scream:",
+              "attachments": [
+                {
+                  "text": "Oops! Something went wrong with the build. Please check the logs."
+                }
+              ]
+            }
 
 workflows:
   version: 2
-  build:
+  build_and_notify:
     jobs:
-      - job1
-      - job2
-      - job3
-      - final_job:
+      - build
+      - notify_pass:
           requires:
-            - job1
-            - job2
-            - job3
-          filters:
-            branches:
-              only: master
-          finish: true  # Ensure this job runs after all other jobs
+            - build
+          context: slack-secrets
+      - notify_fail:
+          requires:
+            - build
+          context: slack-secrets
