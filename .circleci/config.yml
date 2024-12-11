@@ -1,4 +1,3 @@
-
 version: 2.1
 
 orbs:
@@ -24,18 +23,19 @@ jobs:
     steps:
       - run:
           name: Check Python version
-          command: python -version  # Corrected the command here
+          command: python --version  # Corrected command here
 
   notify:
     docker:
-      - image: cimg/base:current
+      - image: cimg/python:3.9  # You can use the same executor image, or use the slack orb's image
     steps:
-- slack/notify:
-	  event: fail
-	  template: basic_fail_1
-- slack/notify:
-	  event: pass
-	  template: success_tagged_deploy_1
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
 workflows:
   version: 2
   build_and_notify:
