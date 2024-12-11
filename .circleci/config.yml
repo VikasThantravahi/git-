@@ -56,5 +56,5 @@ workflows:
     jobs:
       - build
       - test
-      - notify
+      - notify:
           context: slack-secrets
