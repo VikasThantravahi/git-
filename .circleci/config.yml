@@ -43,6 +43,7 @@ jobs:
       - run:
           name: Success
           command: |
+            echo "ddd
             exit 0
   last-job:
     docker:
