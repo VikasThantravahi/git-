@@ -53,6 +53,7 @@ jobs:
       - run:
           name: Success
           command: |
+            echo "ddd
             exit 0
 workflows:
   version: 2
