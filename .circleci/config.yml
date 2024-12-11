@@ -1,49 +1,51 @@
 version: 2.1
 
+# Define Orbs
 orbs:
-  slack: circleci/slack@4.9.3
+  slack: circleci/slack@4.4.1  # Slack Orb version
 
-executors:
-  linux-executor:
-    docker:
-      - image: cimg/python:3.9
-    working_directory: ~/workspace
-
+# Jobs
 jobs:
   build:
-    executor: linux-executor
-    steps:
-      - checkout
-      - run:
-          name: Update system and install curl
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y curl
-
-
-  test:
-    executor: linux-executor
-    steps:
-      - run:
-          name: Check Python version
-          command: python -version
-
-  slack_notification:
     docker:
-      - image: cimg/base:current
+      - image: circleci/python:3.9  # Choose your base image
+    steps:
+      - checkout  # Checkout the code
+      - run:
+          name: Run Tests
+          command: |
+            # Replace with your test command
+            pytest tests/  # Example command for running tests
+          
+  # Notify Slack on success or failure
+  notify:
+    docker:
+      - image: circleci/python:3.9
     steps:
       - slack/notify:
-          event: always
-          template: success_tagged_deploy_1
+          channel: "#your-slack-channel"
+          event: "fail"  # Notify on failure
+          text: "The build has failed, but we're working on it! 😅"
+          color: "danger"  # Red color for failure
+          
+      - slack/notify:
+          channel: "#your-slack-channel"
+          event: "success"  # Always notify on success (even if the build fails)
+          text: "Build pipeline has completed! Even though it failed, we're making progress 💪"
+          color: "good"  # Green color for success
 
 workflows:
   version: 2
-  build_and_test:
+  build_and_notify:
     jobs:
       - build
-      - test
-
-
-
-
+      - notify:
+          requires:
+            - build  # Wait for the build job to finish
+          filters:
+            success:
+              - true  # Notify for success
+            failure:
+              - true  # Notify for failure
+        context: slack-secrets
 
