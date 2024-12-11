@@ -65,8 +65,6 @@ workflows:
           <<: *slack-fail-post-step
       - last-job:
           context: [slack-secrets]
-          requires:
-            - build
           post-steps:
             - slack/notify:
                 custom: |
