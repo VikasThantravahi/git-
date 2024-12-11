@@ -9,21 +9,54 @@ executors:
       - image: cimg/python:3.9
     working_directory: ~/workspace
 
-
 jobs:
-  deploy:
-    executor:
-      name: linux-executor
+  build:
+    executor: linux-executor
     steps:
       - checkout
       - run:
-          command:  python -version
+          name: Update system and install curl
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y curl
+      - run:
+          name: Show current system date
+          command: date
+      - run:
+          name: Install sample dependencies
+          command: |
+            sudo apt-get install -y git
+            git --version
+      - run:
+          name: Echo a message
+          command: echo "Hello from CircleCI!"
+
+  test:
+    executor: linux-executor
+    steps:
+      - run:
+          name: Check Python version
+          command: python --version
+
+  slack_notification:
+    docker:
+      - image: cimg/base:current
+    steps:
       - slack/notify:
           event: fail
           template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
-  deploy_and_notify:
+  version: 2
+  build_and_test:
     jobs:
-      - deploy:
+      - build
+      - test
+      - slack_notification:
+          requires:
+            - build
+            - test
           context: slack-secrets
