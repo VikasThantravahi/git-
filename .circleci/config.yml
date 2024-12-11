@@ -49,8 +49,12 @@ workflows:
     jobs:
       - job1
       - job2
-      - notify:
+      - slack/on-hold:
           requires:
             - job1
             - job2
+          context: slack-secrets
+      - notify:
+          requires:
+            - slack/on-hold
           context: slack-secrets
