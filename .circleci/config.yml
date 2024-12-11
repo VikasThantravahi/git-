@@ -1,17 +1,23 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.1
+  slack: circleci/slack@4.9.3
+
+executors:
+  linux-executor:
+    docker:
+      - image: cimg/python:3.9
+    working_directory: ~/workspace
+
 
 jobs:
   deploy:
     executor:
-      name: node/default
+      name: linux-executor
     steps:
       - checkout
-      - node/install-packages
       - run:
-          command: npm run deploy
+          command:  python --version
       - slack/notify:
           channel: ABCXYZ
           event: fail
