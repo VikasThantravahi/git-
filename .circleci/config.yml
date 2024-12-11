@@ -91,6 +91,8 @@ workflows:
           context: [slack-secrets]
           requires:
             - build
+            - test1
+            - test2
           post-steps:
             - slack/notify:
                 custom: |
