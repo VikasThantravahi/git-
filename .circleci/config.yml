@@ -15,21 +15,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update system and install curl
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y curl
-      - run:
           name: Show current system date
           command: date
-      - run:
-          name: Install sample dependencies
-          command: |
-            sudo apt-get install -y git
-            git --version
-      - run:
-          name: Echo a message
-          command: echo "Hello from CircleCI!"
 
   test:
     executor: linux-executor
@@ -37,22 +24,31 @@ jobs:
       - run:
           name: Check Python version
           command: python -version
-
-  slack_notification_fail:
+version: 2.1
+orbs:
+  slack: circleci/slack@4.9.3
+jobs:
+  notify:
     docker:
       - image: cimg/base:current
     steps:
       - slack/notify:
-          event: fail
-          template: basic_fail_1
-
-  slack_notification_pass:
-    docker:
-      - image: cimg/base:current
-    steps:
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*This is a text notification*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
 
 workflows:
   version: 2
@@ -60,15 +56,5 @@ workflows:
     jobs:
       - build
       - test
-      - slack_notification_fail:
-          requires:
-            - build
-            - test
+      - notify
           context: slack-secrets
-
-      - slack_notification_pass:
-          requires:
-            - build
-            - test
-          context: slack-secrets
-
