@@ -23,11 +23,8 @@ jobs:
     steps:
       - run:
           name: Check Python version
-          command: python -version
-version: 2.1
-orbs:
-  slack: circleci/slack@4.9.3
-jobs:
+          command: python --version  # Corrected the command here
+
   notify:
     docker:
       - image: cimg/base:current
@@ -57,4 +54,4 @@ workflows:
       - build
       - test
       - notify:
-          context: slack-secrets
+          context: slack-secrets  # Ensure the Slack context is defined
