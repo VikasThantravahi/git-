@@ -1,65 +1,25 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.2.1  # Specify the version you want to use
+  node: 'circleci/node:4.1'
+  slack: circleci/slack@4.1
 
 jobs:
-  build:
-    docker:
-      - image: circleci/python:3.8
+  deploy:
+    executor:
+      name: node/default
     steps:
       - checkout
+      - node/install-packages
       - run:
-          name: Install dependencies
-          command: pip install -r requirements.txt
-      - run:
-          name: Run tests
-          command: pytest
-
-  notify_pass:
-    docker:
-      - image: circleci/python:3.8
-    steps:
+          command: npm run deploy
       - slack/notify:
-          channel: "#build-notifications"
-          event: pass  # Only sends when build passes
-          custom: |
-            {
-              "text": ":white_check_mark: Build Passed! :tada: ",
-              "attachments": [
-                {
-                  "text": "The build has completed successfully. Good job!"
-                }
-              ]
-            }
-
-  notify_fail:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - slack/notify:
-          channel: "#build-notifications"
-          event: fail  # Only sends when build fails
-          custom: |
-            {
-              "text": ":x: Build Failed! :scream:",
-              "attachments": [
-                {
-                  "text": "Oops! Something went wrong with the build. Please check the logs."
-                }
-              ]
-            }
+          channel: ABCXYZ
+          event: fail
+          template: basic_fail_1
 
 workflows:
-  version: 2
-  build_and_notify:
+  deploy_and_notify:
     jobs:
-      - build
-      - notify_pass:
-          requires:
-            - build
-          context: slack-secrets
-      - notify_fail:
-          requires:
-            - build
+      - deploy:
           context: slack-secrets
