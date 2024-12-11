@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Success
           command: |
-            echo "hi"
+            echo "hi
 
   job2:
     docker:
