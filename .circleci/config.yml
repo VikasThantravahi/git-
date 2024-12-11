@@ -79,6 +79,14 @@ workflows:
           context: 
             - slack-secrets
           <<: *slack-fail-post-step
+      - test1:
+          context: 
+            - slack-secrets
+          <<: *slack-fail-post-step
+      - test2:
+          context: 
+            - slack-secrets
+          <<: *slack-fail-post-step
       - last-job:
           context: [slack-secrets]
           requires:
