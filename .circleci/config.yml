@@ -1,26 +1,26 @@
 version: 2.1
 orbs:
   slack: circleci/slack@5.1.1
-jobs:
 
+jobs:
   job1:
     docker:
       - image: cimg/base:stable
-      
     steps:
       - run:
           name: Success
           command: |
             echo "hi"
+
   job2:
     docker:
       - image: cimg/base:stable
-      
     steps:
       - run:
           name: Success
           command: |
             echo "hi"
+
   notify:
     docker:
       - image: cimg/base:stable
@@ -42,7 +42,9 @@ jobs:
                 }
               ]
             }
-  workflows:
+
+workflows:
+  version: 2
   your-workflow:
     jobs:
       - job1
