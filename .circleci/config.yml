@@ -44,6 +44,24 @@ jobs:
           name: Success
           command: |
             exit 0
+  test1:
+    docker:
+      - image: cimg/base:stable
+      
+    steps:
+      - run:
+          name: Success
+          command: |
+            echo "hi
+  test2:
+    docker:
+      - image: cimg/base:stable
+      
+    steps:
+      - run:
+          name: Success
+          command: |
+            echo "hi
   last-job:
     docker:
       - image: cimg/base:stable
