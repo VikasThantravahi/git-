@@ -59,10 +59,10 @@ workflows:
     jobs:
       - build:
           context: 
-            - slack
+            - slack-secrets
           <<: *slack-fail-post-step
       - last-job:
-          context: [slack]
+          context: [slack-secrets]
           requires:
             - build
           post-steps:
