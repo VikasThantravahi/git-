@@ -23,7 +23,7 @@ jobs:
     steps:
       - run:
           name: Check Python version
-          command: python --version  # Corrected command here
+          command: python -version  # Corrected command here
 
   notify:
     docker:
