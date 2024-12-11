@@ -1,41 +1,9 @@
 version: 2.1
-
-slack-fail-post-step: &slack-fail-post-step
-  post-steps:
-    - slack/notify:
-        custom: |
-          {
-            "text": "",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "❌ *Failure* #${CIRCLE_BUILD_NUM} `${CIRCLE_PROJECT_REPONAME}` on `${CIRCLE_BRANCH}`"
-                }
-              },
-              {
-                "type": "actions",
-                "elements": [
-                  {
-                    "type": "button",
-                    "text": {
-                      "type": "plain_text",
-                      "text": "View Job"
-                    },
-                    "url": "${CIRCLE_BUILD_URL}"
-                  }
-                ]
-              }
-            ]
-          }
-        event: fail
-
 orbs:
-  slack: circleci/slack@4.1.1
-
+  slack: circleci/slack@5.1.1
 jobs:
-  build:
+
+  job1:
     docker:
       - image: cimg/base:stable
       
@@ -43,9 +11,8 @@ jobs:
       - run:
           name: Success
           command: |
-            echo "ddd
-            exit 0
-  last-job:
+            echo "hi"
+    job2:
     docker:
       - image: cimg/base:stable
       
@@ -53,44 +20,35 @@ jobs:
       - run:
           name: Success
           command: |
-            echo "ddd
-            exit 0
-workflows:
-  version: 2
-  workflow:
+            echo "hi"
+  notify:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - slack/notify:
+          event: always
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*Pipeline Completed*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+  workflows:
+  your-workflow:
     jobs:
-      - build:
-          context: 
-            - slack-secrets
-          <<: *slack-fail-post-step
-      - last-job:
-          context: [slack-secrets]
-          post-steps:
-            - slack/notify:
-                custom: |
-                  {
-                    "text": "",
-                    "blocks": [
-                      {
-                        "type": "section",
-                        "text": {
-                          "type": "mrkdwn",
-                          "text": "✅ *Success* #${CIRCLE_BUILD_NUM} `${CIRCLE_PROJECT_REPONAME}` on `${CIRCLE_BRANCH}`"
-                        }
-                      },
-                      {
-                        "type": "actions",
-                        "elements": [
-                          {
-                            "type": "button",
-                            "text": {
-                              "type": "plain_text",
-                              "text": "View Job"
-                            },
-                            "url": "${CIRCLE_BUILD_URL}"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                event: always
+      - job1
+      - job2
+      - notify:
+          requires:
+            - job1
+            - job2
+          context: slack-secrets
