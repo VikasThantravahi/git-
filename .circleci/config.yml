@@ -43,12 +43,8 @@ jobs:
       - image: cimg/base:current
     steps:
       - slack/notify:
-          event: fail
+          event: always  # This will ensure the Slack notification is always sent
           template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
-    type: always  # This ensures slack_notification runs regardless of the success/failure of previous jobs
 
 workflows:
   version: 2
