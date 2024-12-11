@@ -8,9 +8,7 @@ contexts:
 
 jobs:
   build:
-    docker:
-      - image: cimg/base:stable
-      
+    executor: cimg/base:stable
     steps:
       - run:
           name: Build
@@ -45,57 +43,3 @@ jobs:
                     }
                   ]
                 }
-              ]
-            }
-          event: fail
-
-  deploy:
-    docker:
-      - image: cimg/base:stable
-      
-    steps:
-      - run:
-          name: Deploy
-          command: |
-            echo "Deploying..."
-            exit 0
-
-    post-steps:
-      - slack/notify:
-          context: slack-secrets
-          custom: |
-            {
-              "text": "",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "✅ *Success* #${CIRCLE_BUILD_NUM} `${CIRCLE_PROJECT_REPONAME}` on `${CIRCLE_BRANCH}`"
-                  }
-                },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "View Job"
-                      },
-                      "url": "${CIRCLE_BUILD_URL}"
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
-
-workflows:
-  version: 2
-  workflow:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
