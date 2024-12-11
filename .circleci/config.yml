@@ -12,7 +12,7 @@ jobs:
           name: Success
           command: |
             echo "hi"
-    job2:
+  job2:
     docker:
       - image: cimg/base:stable
       
