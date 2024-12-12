@@ -1,113 +1,43 @@
 version: 2.1
-slack-fail-post-step: &slack-fail-post-step
-  post-steps:
-    - slack/notify:
-        custom: |
-          {
-            "text": "",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "❌ *Failure* #${CIRCLE_BUILD_NUM} `${CIRCLE_PROJECT_REPONAME}` on `${CIRCLE_BRANCH}`"
-                }
-              },
-              {
-                "type": "actions",
-                "elements": [
-                  {
-                    "type": "button",
-                    "text": {
-                      "type": "plain_text",
-                      "text": "View Job"
-                    },
-                    "url": "${CIRCLE_BUILD_URL}"
-                  }
-                ]
-              }
-            ]
-          }
-        event: fail
-
-orbs:
-  slack: circleci/slack@4.1.1
 
 jobs:
   build:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:14
     steps:
-      - run:
-          name: Success
-          command: |
-            echo "hi"
-            echo $CIRCLE_PROJECT_USERNAME
-            echo "$CIRCLE_USERNAME"
-            
+      - run: echo "Building..."
 
-  tests:
+  test:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:14
     steps:
-      - run:
-          name: Success
-          command: |
-            echo "hi
+      - run: echo "Testing..."
 
-  last-job:
+  waiter:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:14
     steps:
-      - run:
-          name: Success
-          command: |
-            echo "hi"
+      - run: |
+          if [ "$(circleci pipeline status)" != "success" ]; then
+            echo "{\"extra-job\": true}" > params.json
+          fi
 
 workflows:
-  version: 2
-  workflow:
+  main:
     jobs:
-      - build:
-          context: 
-            - slack-secrets
-          <<: *slack-fail-post-step
-      - tests:
-          context: 
-            - slack-secrets
-          <<: *slack-fail-post-step
-      - last-job:
-          context: 
-            - slack-secrets
+      - build
+      - test
+      - waiter:
           requires:
             - build
-            - tests
-          post-steps:
-            - slack/notify:
-                custom: |
-                  {
-                    "text": "",
-                    "blocks": [
-                      {
-                        "type": "section",
-                        "text": {
-                          "type": "mrkdwn",
-                          "text": "✅ *Success* #${CIRCLE_BUILD_NUM} `${CIRCLE_PROJECT_REPONAME}` on `${CIRCLE_BRANCH}`"
-                        }
-                      },
-                      {
-                        "type": "actions",
-                        "elements": [
-                          {
-                            "type": "button",
-                            "text": {
-                              "type": "plain_text",
-                              "text": "View Job"
-                            },
-                            "url": "${CIRCLE_BUILD_URL}"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                event: always
+            - test
+
+  continuation:
+    jobs:
+      - slack-notification:
+          context: slack-secretes
+          when: << pipeline.parameters.extra-job >>
+    parameters:
+      extra-job:
+        type: boolean
+        default: false
