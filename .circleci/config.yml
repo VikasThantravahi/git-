@@ -38,16 +38,6 @@ jobs:
   build:
     docker:
       - image: cimg/base:stable
-      
-    steps:
-      - run:
-          name: Success
-          command: |
-            echo "hi"
-  last-job:
-    docker:
-      - image: cimg/base:stable
-      
     steps:
       - run:
           name: Success
@@ -57,12 +47,21 @@ jobs:
   tests:
     docker:
       - image: cimg/base:stable
-      
     steps:
       - run:
           name: Success
           command: |
             echo "hi"
+
+  last-job:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run:
+          name: Success
+          command: |
+            echo "hi"
+
 workflows:
   version: 2
   workflow:
@@ -71,12 +70,13 @@ workflows:
           context: 
             - slack-secrets
           <<: *slack-fail-post-step
-       - tests:
-            context: 
+      - tests:
+          context: 
             - slack-secrets
           <<: *slack-fail-post-step
       - last-job:
-          context: [slack-secrets]
+          context: 
+            - slack-secrets
           requires:
             - build
             - tests
