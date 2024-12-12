@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Success
           command: |
-            echo "hi"
+            echo "h
 workflows:
   version: 2
   workflow:
