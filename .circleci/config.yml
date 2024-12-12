@@ -90,5 +90,5 @@ workflows:
       - slack_notify:
           requires:
             - waiter
-          when: << pipeline.parameters.EXTRA_JOB >>
+          when: << pipeline.parameters.extra-job >>
           context: slack-secrets
