@@ -1,69 +1,96 @@
 version: 2.1
 
-orbs:
-  slack: circleci/slack@4.9.3
+slack-fail-post-step: &slack-fail-post-step
+  post-steps:
+    - slack/notify:
+        custom: |
+          {
+            "text": "",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "❌ *Failure* #${CIRCLE_BUILD_NUM} `${CIRCLE_PROJECT_REPONAME}` on `${CIRCLE_BRANCH}`"
+                }
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Job"
+                    },
+                    "url": "${CIRCLE_BUILD_URL}"
+                  }
+                ]
+              }
+            ]
+          }
+        event: fail
 
-executors:
-  linux-executor:
-    docker:
-      - image: cimg/python:3.9
-    working_directory: ~/workspace
+orbs:
+  slack: circleci/slack@4.1.1
 
 jobs:
   build:
-    executor: linux-executor
-    steps:
-      - checkout
-      - run:
-          name: Update system and install curl
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y curl
-      - run:
-          name: Show current system date
-          command: date
-      - run:
-          name: Install sample dependencies
-          command: |
-            sudo apt-get install -y git
-            git --version
-      - run:
-          name: Echo a message
-          command: 
-            echo "Hello from CircleCI!"
-            echo "$CIRCLE_USERNAME"
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-
-  test:
-    executor: linux-executor
+    docker:
+      - image: cimg/base:stable
+      
     steps:
       - run:
-          name: Check Python version
+          name: Success
           command: |
-            python --version
-            echo $CIRCLE_USERNAME
-
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-  slack-notification_sucess:
-    executor: linux-executor
+            echo "hi"
+  last-job:
+    docker:
+      - image: cimg/base:stable
+      
     steps:
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+      - run:
+          name: Success
+          command: |
+            echo "hi"
 workflows:
   version: 2
-  build_and_test:
+  workflow:
     jobs:
       - build:
-          context: slack-secrets
-      - slack-notification_sucess:
+          context: 
+            - slack
+          <<: *slack-fail-post-step
+      - last-job:
+          context: [slack]
           requires:
             - build
-            - test
-          context: slack-secrets
-      - test:
-          context: slack-secrets
+          post-steps:
+            - slack/notify:
+                custom: |
+                  {
+                    "text": "",
+                    "blocks": [
+                      {
+                        "type": "section",
+                        "text": {
+                          "type": "mrkdwn",
+                          "text": "✅ *Success* #${CIRCLE_BUILD_NUM} `${CIRCLE_PROJECT_REPONAME}` on `${CIRCLE_BRANCH}`"
+                        }
+                      },
+                      {
+                        "type": "actions",
+                        "elements": [
+                          {
+                            "type": "button",
+                            "text": {
+                              "type": "plain_text",
+                              "text": "View Job"
+                            },
+                            "url": "${CIRCLE_BUILD_URL}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                event: always
