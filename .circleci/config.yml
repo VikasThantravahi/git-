@@ -1,41 +1,6 @@
 version: 2.1
 
 orbs:
-slack: circleci/slack@4.9.3
-
-executors:
-linux-executor:
-docker:
-- image: cimg/python:3.9 # Use a Docker image with Python (you can choose any image you prefer)
-working_directory: ~/workspace # Set the working directory for your project
-
-jobs:
-build:
-executor: linux-executor
-steps:
-# Checkout the code from your repository
-- checkout
-
-# Update the system and install sample packages
-- run:
-name: Update system and install curl
-command: |
-  sudo apt-get update
-  sudo apt-get install -y curl
-
-# Run a simple Linux command (for example, print the system date)
-- run:
-name: Show current system date
-command: date
-
-# Install any additional dependencies (if necessary)
-- run:
-name: Install sample dependencies
-command: |
-sudo apt-get install -y git
-version: 2.1
-
-orbs:
   slack: circleci/slack@4.9.3
 
 executors:
@@ -76,17 +41,7 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
-
-  slack_notification:
-    docker:
-      - image: cimg/base:current
-    steps:
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+          context: slack-secret
 
 workflows:
   version: 2
@@ -94,5 +49,3 @@ workflows:
     jobs:
       - build
       - test
-
-          context: slack-secret
