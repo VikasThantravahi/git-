@@ -49,4 +49,4 @@ workflows:
     jobs:
       - build
       - test
-        context: slack-secrets
+          context: slack-secrets
