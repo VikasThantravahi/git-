@@ -1,5 +1,4 @@
 version: 2.1
-
 slack-fail-post-step: &slack-fail-post-step
   post-steps:
     - slack/notify:
