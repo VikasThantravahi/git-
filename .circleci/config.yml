@@ -36,15 +36,26 @@ jobs:
     steps:
       - run:
           name: Check Python version
-          command: python -version
+          command: python --version
 
       - slack/notify:
           event: fail
           template: basic_fail_1
+  slack-notification_sucess:
+    executor: linux-executor
+    steps:
+      - slack/notify:
+          event: pass
+          template: template: success_tagged_deploy_1
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
+      - slack-notification_sucess:
+          requires:
+            - build
+            - test
+          context: slack-secrets
       - test:
           context: slack-secrets
