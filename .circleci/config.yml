@@ -1,36 +1,94 @@
 version: 2.1
 
 orbs:
-  continuation: circleci/continuation@1.0.0
+  continuation: circleci/continuation@1.1.0
+  slack: circleci/slack@4.0.0
+
+parameters:
+  extra-job:
+    type: boolean
+    default: false
+  failure-threshold:
+    type: integer
+    default: 1  # Set the number of failed jobs that will trigger the Slack notification
 
 jobs:
-  build:
+  job1:
     docker:
       - image: circleci/python:3.8
     steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: pip install -r requirements.txt
-      - continuation/continue:
-          when: "success"  # Continue if the install step succeeds
+      - run: echo "Running job1" && exit 1  # This job will fail
 
-  test:
+  job2:
     docker:
       - image: circleci/python:3.8
     steps:
-      - checkout
+      - run: echo "Running job2" && exit 0  # This job will succeed
+
+  job3:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - run: echo "Running job3" && exit 1  # This job will fail
+
+  job4:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - run: echo "Running job4" && exit 0  # This job will succeed
+
+  # Waiter job checks the status of the jobs in the workflow
+  waiter:
+    docker:
+      - image: circleci/python:3.8
+    steps:
       - run:
-          name: Run Tests
-          command: python -m unittest discover
-      - continuation/continue:
-          when: "failure"  # Continue even if tests fail
+          name: Check Job Statuses and Set Pipeline Parameter
+          command: |
+            # Check the status of each job and count failures
+            echo "Checking job statuses..."
+            FAILED_JOBS=0
+            JOBS=(job1 job2 job3 job4)
+            for job in "${JOBS[@]}"; do
+              STATUS=$(curl -s --header "Circle-Token: $CIRCLECI_TOKEN" https://circleci.com/api/v2/project/gh/your_org/your_repo/pipeline/${CIRCLE_PIPELINE_ID}/workflow/${job} | jq -r .status)
+              if [[ $STATUS == "failed" ]]; then
+                FAILED_JOBS=$((FAILED_JOBS + 1))
+              fi
+            done
+
+            # Compare the number of failed jobs with the threshold
+            if [[ $FAILED_JOBS -ge << pipeline.parameters.failure-threshold >> ]]; then
+              echo "At least << pipeline.parameters.failure-threshold >> jobs failed, setting extra-job to true."
+              echo "export EXTRA_JOB=true" >> $BASH_ENV
+            else
+              echo "Not enough failures to trigger Slack notification."
+            fi
+
+  # Slack notification job
+  slack_notify:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - slack/notify:
+          message: "🚨 ${FAILED_JOBS} jobs have failed! Please check the logs."
+          channel: "#general"
 
 workflows:
   version: 2
-  build_and_test:
+  setup:
     jobs:
-      - build
-      - test:
+      - job1
+      - job2
+      - job3
+      - job4
+      - waiter:
           requires:
-            - build
+            - job1
+            - job2
+            - job3
+            - job4
+      - slack_notify:
+          requires:
+            - waiter
+          when: << pipeline.parameters.extra-job >>
+          context: slack-secrets
