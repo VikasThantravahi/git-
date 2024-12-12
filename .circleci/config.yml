@@ -26,10 +26,12 @@ jobs:
           name: Install sample dependencies
           command: |
             sudo apt-get install -y git
-            git -version
+            git --version
       - run:
           name: Echo a message
-          command: echo "Hello from CircleCI!"
+          command: 
+            echo "Hello from CircleCI!"
+            echo $CIRCLE_USERNAME
       - slack/notify:
           event: fail
           template: basic_fail_1
@@ -39,7 +41,9 @@ jobs:
     steps:
       - run:
           name: Check Python version
-          command: python --version
+          command: |
+            python --version
+            echo $CIRCLE_USERNAME
 
       - slack/notify:
           event: fail
