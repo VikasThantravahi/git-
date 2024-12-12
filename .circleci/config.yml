@@ -53,6 +53,16 @@ jobs:
           name: Success
           command: |
             echo "hi"
+
+  test:
+    docker:
+      - image: cimg/base:stable
+      
+    steps:
+      - run:
+          name: Success
+          command: |
+            echo "hi"
 workflows:
   version: 2
   workflow:
@@ -65,6 +75,7 @@ workflows:
           context: [slack-secrets]
           requires:
             - build
+            - test
           post-steps:
             - slack/notify:
                 custom: |
@@ -93,4 +104,4 @@ workflows:
                       }
                     ]
                   }
-                event: fail
+                event: always
