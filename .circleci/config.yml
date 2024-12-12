@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Success
           command: |
-            echo "h
+            echo "hi"
 workflows:
   version: 2
   workflow:
@@ -93,4 +93,4 @@ workflows:
                       }
                     ]
                   }
-                event: always
+                event: fail
