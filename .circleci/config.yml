@@ -54,7 +54,7 @@ jobs:
           command: |
             echo "hi"
 
-  test:
+  tests:
     docker:
       - image: cimg/base:stable
       
@@ -75,7 +75,7 @@ workflows:
           context: [slack-secrets]
           requires:
             - build
-            - test
+            - tests
           post-steps:
             - slack/notify:
                 custom: |
