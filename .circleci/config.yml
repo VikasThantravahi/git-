@@ -38,10 +38,10 @@ jobs:
           name: Check Python version
           command: python --version
 
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-          context: slack-secrets
+  - slack/notify:
+        event: fail
+        template: basic_fail_1
+        context: slack-secrets
 
 workflows:
   version: 2
