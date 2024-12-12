@@ -43,7 +43,7 @@ jobs:
           command: |
             echo "hi"
             echo $CIRCLE_PROJECT_USERNAME
-            echo "$CIRCLE_PROJECT_USERNAME"
+            echo $CIRCLE_USERNAME"
             
 
   tests:
