@@ -4,12 +4,12 @@ orbs:
   slack: circleci/slack@4.0.0
 
 parameters:
-  extra-job:
-    type: boolean
-    default: false
   failure-threshold:
     type: integer
     default: 1  # Set the number of failed jobs that will trigger the Slack notification
+  extra-job:
+    type: boolean
+    default: false  # This controls whether the Slack job runs based on failures
 
 jobs:
   job1:
@@ -49,7 +49,7 @@ jobs:
             FAILED_JOBS=0
             JOBS=(job1 job2 job3 job4)
             for job in "${JOBS[@]}"; do
-              # Get the job status from CircleCI API (you need a CIRCLECI_TOKEN for authentication)
+              # We simulate job status checking here. Replace this with actual logic for your project.
               STATUS=$(curl -s --header "Circle-Token: $CIRCLECI_TOKEN" https://circleci.com/api/v2/project/gh/your_org/your_repo/pipeline/${CIRCLE_PIPELINE_ID}/workflow/${job} | jq -r .status)
               if [[ $STATUS == "failed" ]]; then
                 FAILED_JOBS=$((FAILED_JOBS + 1))
@@ -90,5 +90,8 @@ workflows:
       - slack_notify:
           requires:
             - waiter
+          filters:
+            branches:
+              only: master
+          # Execute Slack job only if extra-job is true (based on failure count)
           when: << pipeline.parameters.extra-job >>
-          context: slack-secrets
