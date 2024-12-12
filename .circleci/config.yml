@@ -95,4 +95,3 @@ workflows:
             branches:
               only: master
           # Execute Slack job only if extra-job is true (based on failure count)
-          when: << pipeline.parameters.extra-job >>
