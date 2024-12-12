@@ -55,6 +55,7 @@ workflows:
   build_and_test:
     jobs:
       - build
+          context: slack-secrets
       - slack-notification_sucess:
           requires:
             - build
