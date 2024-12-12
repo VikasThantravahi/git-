@@ -4,6 +4,9 @@ orbs:
   slack: circleci/slack@4.0.0
 
 parameters:
+  extra-job:
+    type: boolean
+    default: false
   failure-threshold:
     type: integer
     default: 1  # Set the number of failed jobs that will trigger the Slack notification
