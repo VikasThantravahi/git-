@@ -41,7 +41,7 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
-          context: slack-secret
+          context: slack-secrets
 
 workflows:
   version: 2
