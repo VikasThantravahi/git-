@@ -3,41 +3,55 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:14
+      - image: circleci/python:3.8  # Use a Docker image that fits your environment
     steps:
-      - run: echo "Building..."
+      - checkout  # Check out the code from the repository
+      - run:
+          name: Update and install dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y curl git
+      - run:
+          name: Print system info
+          command: |
+            uname -a
+            df -h
+      - run:
+          name: List files in the current directory
+          command: ls -l
 
   test:
     docker:
-      - image: circleci/node:14
+      - image: circleci/python:3.8
     steps:
-      - run: echo "Testing..."
+      - checkout
+      - run:
+          name: Run tests
+          command: |
+            echo "Running tests..."
+            # Example test command
+            python3 -m unittest discover
 
-  waiter:
+  deploy:
     docker:
-      - image: circleci/node:14
+      - image: circleci/python:3.8
     steps:
-      - run: |
-          if [ "$(circleci pipeline status)" != "success" ]; then
-            echo "{\"extra-job\": true}" > params.json
-          fi
+      - checkout
+      - run:
+          name: Deploy to server (example)
+          command: |
+            echo "Deploying application..."
+            # Replace with actual deploy commands
+            ssh user@your-server "echo 'Deploying app' && sudo systemctl restart myapp"
 
 workflows:
-  main:
+  version: 2
+  build_and_deploy:
     jobs:
       - build
-      - test
-      - waiter:
+      - test:
           requires:
             - build
+      - deploy:
+          requires:
             - test
-
-  continuation:
-    jobs:
-      - slack-notification:
-          context: slack-secretes
-          when: << pipeline.parameters.extra-job >>
-    parameters:
-      extra-job:
-        type: boolean
-        default: false
