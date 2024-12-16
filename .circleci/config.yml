@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            echo "Running tests.."
+            echo "Running tests..
             # Example test command
 workflows:
   version: 2
