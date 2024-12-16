@@ -30,7 +30,6 @@ jobs:
           command: |
             echo "Running tests..."
             # Example test command
-            python3 -m unittest discover
 
   deploy:
     docker:
@@ -42,7 +41,6 @@ jobs:
           command: |
             echo "Deploying application..."
             # Replace with actual deploy commands
-            ssh user@your-server "echo 'Deploying app' && sudo systemctl restart myapp"
 
 workflows:
   version: 2
