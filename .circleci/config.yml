@@ -7,11 +7,6 @@ jobs:
     steps:
       - checkout  # Check out the code from the repository
       - run:
-          name: Print system info
-          command: |
-            uname -a
-            df -h
-      - run:
           name: List files in the current directory
           command: ls -l
 
