@@ -20,7 +20,6 @@ jobs:
             # Example test command
 
 
-
 workflows:
   version: 2
   build_and_deploy:
