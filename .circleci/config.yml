@@ -19,16 +19,7 @@ jobs:
             echo "Running tests..."
             # Example test command
 
-  deploy:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: Deploy to server (example)
-          command: |
-            echo "Deploying application..."
-            # Replace with actual deploy commands
+
 
 workflows:
   version: 2
@@ -38,6 +29,4 @@ workflows:
       - test:
           requires:
             - build
-      - deploy:
-          requires:
-            - test
+
