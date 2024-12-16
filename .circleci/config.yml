@@ -18,7 +18,6 @@ jobs:
           command: |
             echo "Running tests.."
             # Example test command
-
 workflows:
   version: 2
   build_and_deploy:
