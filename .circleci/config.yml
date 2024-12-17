@@ -7,7 +7,7 @@ jobs:
       - checkout  # Check out the code from the repositorys
       - run:
           name: List files in the current directory
-          command: ls -lar
+          command: ls -la
   test:
     docker:
       - image: circleci/python:3.8
