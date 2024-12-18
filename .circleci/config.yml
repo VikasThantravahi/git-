@@ -10,6 +10,6 @@ jobs:
           command: ls -lart
 workflows:
   version: 2
-  build_and_deploy:
+  deploy_staging_and_prod:
     jobs:
       - build
