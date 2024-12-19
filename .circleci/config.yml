@@ -7,7 +7,7 @@ jobs:
       - checkout  # Check out the code from the repository
       - run:
           name: List files in the current directory
-          command: ls -lart
+          command: ls -lar
 workflows:
   version: 2
   deploy_staging_and_prod:
