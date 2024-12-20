@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/python:3.8  # Use a Docker image that fits your environments
+      - image: circleci/python:3.8  # Use a Docker image that fits your environment
     steps:
       - checkout  # Check out the code from the repository
       - run:
