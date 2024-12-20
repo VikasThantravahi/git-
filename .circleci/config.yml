@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/python:3.8  # Use a Docker image that fits your environments
     steps:
-      - checkout  # Check out the code from the repository
+      - checkout  # Check out the code from the repositoryy
       - run:
           name: List files in the current directory
           command: ls -lar
