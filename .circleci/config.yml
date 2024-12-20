@@ -6,7 +6,13 @@ jobs:
     steps:
       - checkout  # Check out the code from the repository
       - run:
-          name: List files in the current directory
+          name: List files in the current directoryy
+
+
+
+
+
+          
           command: ls -lar
 workflows:
   version: 2
