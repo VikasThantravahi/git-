@@ -1,6 +1,4 @@
-Yes, you can use numbers = [${{ a }}, ${{ b }}] to create the list with the values of a and b.
-Here's the updated YAML file:
-YAML
+
 name: Python Script Runner
 
 on:
