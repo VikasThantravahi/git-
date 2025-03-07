@@ -61,7 +61,7 @@ jobs:
         run: |
           ls -lart
           echo "Deploying project..."
-          cat build.txt
+          #cat build.txt
           echo "Deployment successful!"
           
       - name: Print message
