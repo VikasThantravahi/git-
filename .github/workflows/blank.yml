@@ -1,3 +1,6 @@
+Yes, you can use numbers = [${{ a }}, ${{ b }}] to create the list with the values of a and b.
+Here's the updated YAML file:
+YAML
 name: Python Script Runner
 
 on:
@@ -14,12 +17,14 @@ jobs:
 
       - name: Run Python Script
         shell: python
+        env:
+          a: 1
+          b: 2
         run: |
-          a = 1
-          b = 2
-          numbers = [a, b]
+          numbers = [${{ a }}, ${{ b }}]
           if 1 in numbers:
             print('Error: Variable \'a\' or \'b\' is 1.')
             exit(1)
           else:
             exit(0)
+This way, you can easily access the values of a and b in your Python script.
