@@ -22,7 +22,7 @@ jobs:
   
   build:
     needs: test
-    #if: github.event.ref == 'refs/heads/dev'  # Corrected the branch reference check
+    if: github.event.ref == 'refs/heads/dev'  # Corrected the branch reference check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
