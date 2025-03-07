@@ -20,7 +20,8 @@ jobs:
 
   build:
     needs: test
-    if: github.event.ref == 'refs/heads/dev'  # Corrected the branch reference check
+    #if: github.event.ref == 'refs/heads/dev'  # Corrected the branch reference check
+    if: needs.build.result != 'skipped'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -39,6 +40,7 @@ jobs:
         run: echo "Build job completed!"
 
   deploy:
+    if: always() && (needs.build.result == 'skipped' || needs.build.result == 'success')
     needs: [test, build]
     runs-on: ubuntu-latest
     steps:
