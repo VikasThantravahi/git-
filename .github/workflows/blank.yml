@@ -40,7 +40,6 @@ jobs:
 
   deploy:
     needs: [test, build]
-    if: always() && (needs.build.result == 'skipped' || needs.build.result == 'success')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
