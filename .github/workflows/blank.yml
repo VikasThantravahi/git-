@@ -59,6 +59,7 @@ jobs:
           
       - name: Deploy
         run: |
+          ls -lart
           echo "Deploying project..."
           cat build_output/build.txt
           echo "Deployment successful!"
