@@ -19,7 +19,7 @@ jobs:
           a: 1
           b: 2
         run: |
-          numbers = [${{ a }}, ${{ b }}]
+          numbers = ['${{ a }}', '${{ b }}']
           if 1 in numbers:
             print('Error: Variable \'a\' or \'b\' is 1.')
             exit(1)
