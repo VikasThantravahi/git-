@@ -15,6 +15,8 @@ jobs:
         run: |
           echo "Running tests..."
           echo "Tests passed!"
+      - name: Print message
+        run: echo "Test job completed!"
 
   build:
     needs: test
@@ -26,6 +28,8 @@ jobs:
         run: |
           echo "Building project..."
           echo "Build successful!"
+      - name: Print message
+        run: echo "Build job completed!"
 
   deploy:
     needs: [test, build]
@@ -37,3 +41,5 @@ jobs:
         run: |
           echo "Deploying project..."
           echo "Deployment successful!"
+      - name: Print message
+        run: echo "Deployment completed!"
