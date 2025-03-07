@@ -11,34 +11,38 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
       - name: Test
         run: |
           echo "Running tests..."
           echo "Tests passed!"
+          
       - name: Print message
         run: echo "Test job completed!"
-
+  
   build:
     needs: test
-    #if: github.event.ref == 'refs/heads/dev'  # Corrected the branch reference check
-    if: needs.build.result != 'skipped'
+    if: github.event.ref == 'refs/heads/dev'  # Corrected the branch reference check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
       - name: Build
         run: |
           echo "Building project..."
           mkdir build_output
           echo "Build successful!" > build_output/build.txt
+          
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
           path: build_output/
+          
       - name: Print message
         run: echo "Build job completed!"
-
+        
   deploy:
     if: always() && (needs.build.result == 'skipped' || needs.build.result == 'success')
     needs: [test, build]
@@ -46,15 +50,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
       - name: Download build artifact
         uses: actions/download-artifact@v4
-        if:  github.event.ref == 'refs/heads/dev'
+        if: always() && (needs.build.result == 'skipped' || needs.build.result == 'success')
         with:
           name: build-artifact
+          
       - name: Deploy
         run: |
           echo "Deploying project..."
           cat build_output/build.txt
           echo "Deployment successful!"
+          
       - name: Print message
         run: echo "Deployment completed!"
