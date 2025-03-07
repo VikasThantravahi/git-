@@ -60,7 +60,7 @@ jobs:
       - name: Deploy
         run: |
           echo "Deploying project..."
-          cat build_output/build.txt
+          #cat build_output/build.txt
           echo "Deployment successful!"
           
       - name: Print message
