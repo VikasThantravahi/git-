@@ -3,7 +3,6 @@ name: Test, Build, and Deploy
 on:
   push:
     branches:
-      - dev
       - main
 
 jobs:
@@ -35,6 +34,7 @@ jobs:
 
   deploy:
     needs: [test, build]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
