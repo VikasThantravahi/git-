@@ -1,4 +1,3 @@
-
 name: Test, Build, and Deploy
 
 on:
@@ -29,7 +28,7 @@ jobs:
           echo "Build successful!"
 
   deploy:
-    needs: build
+    needs: [test, build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
