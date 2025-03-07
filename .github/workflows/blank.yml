@@ -20,20 +20,24 @@ jobs:
 
     - name: Install dependencies
       run: |
-        import sys
-        
-        a = 1
-        b = 2
-        c = 1
+        python -m pip install --upgrade pip
+        # Install dependencies here if needed, e.g.:
+        # pip install -r requirements.txt
 
-        apply_results = [
-            a,
-            b,
-            c
-        ]
+    - name: Run Python script
+      run: |
+        python -c "
+import sys
 
-        if 2 in apply_results:
-            print('There was an error')
-            sys.exit(1)
-        else:
-            sys.exit(0)
+a = 1
+b = 2
+c = 1
+
+apply_results = [a, b, c]
+
+if 2 in apply_results:
+    print('There was an error')
+    sys.exit(1)
+else:
+    sys.exit(0)
+"
