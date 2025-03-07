@@ -14,14 +14,14 @@ jobs:
 
       - name: Run Python Script
         env:
-          a: ${{ github.event.inputs.a }}
-          b: ${{ github.event.inputs.b }}
+          a: 1
+          b: 2
         run: |
-          python -c "
+          python3 -c "
             import os
             import sys
-            a = int(os.environ.get('a', 0))
-            b = int(os.environ.get('b', 0))
+            a = int(os.environ.get('a'))
+            b = int(os.environ.get('b'))
             numbers = [a, b]
             if 1 in numbers:
               print('Error: Variable \'a\' or \'b\' is 1.')
