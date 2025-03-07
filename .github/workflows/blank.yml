@@ -1,30 +1,17 @@
+name: Python Script Runner
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  run-python-command:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.8'
-
-    - name: Run Python code inline in shell
-      run: |
-        python -c "
-import sys
-
-a = 1
-b = 2
-c = 1
-
-apply_results = [a, b, c]
-
-if 2 in apply_results:
-    print('There was an error')
-    sys.exit(1)
-else:
-    sys.exit(0)
-        "
+      - name: Run Python Script
+        run: |
+          python -c "import sys; print('Hello, World!'); print('Python Version:', sys.version)"
