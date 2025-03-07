@@ -18,7 +18,7 @@ jobs:
           a = 2
           b = 1
           c = 2
-          numbers = [a, b, c]
+          numbers = [a, b c]
           if 1 in numbers:
             print('Error: Variable \'a\' or \'b\' is 1.')
             exit(1)
