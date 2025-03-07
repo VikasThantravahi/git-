@@ -16,7 +16,7 @@ jobs:
         shell: python
         run: |
           a = 2
-          b = 2
+          b = 1
           c = 2
           numbers = [a, b, c]
           if 1 in numbers:
