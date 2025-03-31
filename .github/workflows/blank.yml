@@ -1,5 +1,3 @@
-# .github/workflows/basic.yml
-
 name: Echo Workflow - Parallel Jobs
 
 on:
@@ -7,26 +5,27 @@ on:
     branches:
       - main
   pull_request:
-
 jobs:
-  test:
-    name: Test Job
+  filter:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Say Hello from Test Job
-        run: echo "✅ This is the Test Job - Running..."
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Another echo
-        run: echo "✅ Test Job Completed!"
+      - name: Filter paths (using dorny/paths-filter)
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            # Define filters for your paths
+            frontend:
+              - 'test/an/*'
 
-  build:
-    name: Build Job
-    runs-on: ubuntu-latest
+      - name: Run Frontend tests
+        if: steps.filter.outputs.frontend == 'true'  # Runs only if frontend files were changed
+        run: |
+          echo "Running frontend tests..."
+          # Add your commands to run frontend tests
 
-    steps:
-      - name: Say Hello from Build Job
-        run: echo "🚀 This is the Build Job - Running in parallel..."
-
-      - name: Another echo
-        run: echo "🚀 Build Job Completed!"
+      
