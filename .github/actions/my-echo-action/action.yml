@@ -1,0 +1,24 @@
+name: CI Workflow with Echo Action
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Run the custom echo action
+      - name: Run my echo action
+        uses: ./.github/actions/my-echo-action
+        with:
+          message: 'Hello from GitHub Actions!'

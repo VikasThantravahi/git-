@@ -7,9 +7,7 @@ on:
 jobs:
   filter:
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Filter paths (using dorny/paths-filter)
         id: filter
         uses: dorny/paths-filter@v2
@@ -18,10 +16,12 @@ jobs:
             # Define filters for your paths
             frontend:
               - 'test/an/*'
+      - name: Run my echo action
+        uses: ./.github/actions/my-echo-action
+        if: steps.filter.outputs.frontend == 'true'
+        with:
+          message: 'Hello from GitHub Actions!'
       
-      - name: Checkout code
-        uses: actions/checkout@v2
-        if: steps.filter.outputs.frontend == 'true' 
 
       - name: Run Frontend tests
         if: steps.filter.outputs.frontend == 'true'  # Runs only if frontend files were changed
