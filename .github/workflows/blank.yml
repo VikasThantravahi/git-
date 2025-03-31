@@ -1,17 +1,14 @@
 name: Echo Workflow - Parallel Jobs
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-  pull_request:
 jobs:
   filter:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
       - name: Filter paths (using dorny/paths-filter)
         id: filter
@@ -21,6 +18,10 @@ jobs:
             # Define filters for your paths
             frontend:
               - 'test/an/*'
+      
+      - name: Checkout code
+        uses: actions/checkout@v2
+        if: steps.filter.outputs.frontend == 'true' 
 
       - name: Run Frontend tests
         if: steps.filter.outputs.frontend == 'true'  # Runs only if frontend files were changed
