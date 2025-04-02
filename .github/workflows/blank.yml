@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   stage-one:
@@ -16,6 +13,8 @@ jobs:
         run: |
           echo "This is Stage One - Running basic checks"
           echo $HI
+          echo "a={{ env.HI }}"
+          echo $a
           echo "b=${{ secrets.AB }}" >> $GITHUB_ENV
           
 
