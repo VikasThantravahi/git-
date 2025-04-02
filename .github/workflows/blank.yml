@@ -16,6 +16,12 @@ jobs:
           echo "${{ env.ab }}"
           echo "Printing ab: '${{ env.ab }}'"
           echo "Printi1ng ab: ${{ env.ab }}"
+      - name: variable_printing
+        run: |
+          echo "${{ env.ab }}"
+          echo "Printing ab: '${{ env.ab }}'"
+          echo "Printi1ng ab: ${{ env.ab }}"
+           
 
 
 
