@@ -12,13 +12,5 @@ jobs:
       - name: Step 1 - Print message
         run: |
           echo "This is Stage One - Running basic checks"
-          echo ""
-          echo "a=" >> $GITHUB_ENV
-          echo "${a}"
-          echo "b=" >> $GITHUB_ENV
-        shell: /usr/bin/bash -e {0}
+          echo variable HI is = ${{ vars.HI }}
 
-      - name: Printing the variables
-        run: |
-          echo "a is ${{ env.a }}"
-          echo "b is ${{ env.b }}"
