@@ -15,7 +15,7 @@ jobs:
       - name: Step 1 - Print message
         run: |
           echo "This is Stage One - Running basic checks"
-          echo "b=${{var.a}}" >> $GITHUB_ENV
+          echo "b=${{ secrets.AB}}" >> $GITHUB_ENV
       - name: Printing the variables
         run: echo b is  "$b"
 
