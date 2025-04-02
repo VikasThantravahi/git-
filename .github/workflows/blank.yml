@@ -13,7 +13,7 @@ jobs:
         run: |
           echo "This is Stage One - Running basic checks"
           echo $HI
-          echo "a={{ env.HI }}" >> $GITHUB_ENV
+          echo "a={{ vars.HI }}" >> $GITHUB_ENV
           echo "$a"
           echo "b=${{ secrets.AB }}" >> $GITHUB_ENV
           
