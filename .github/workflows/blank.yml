@@ -14,8 +14,8 @@ jobs:
           echo secret is = ${{ secrets.SET }}
           echo "ab=${{ vars.HI }}" >> $GITHUB_ENV
           echo "${{ env.ab }}"
-          echo "Printing ab: ${{ env.b }}"
-          echo "Printi1ng ab: ${{ env.b }}"
+          echo "Printing ab: ${{ env.ab }}"
+          echo "Printi1ng ab: ${{ env.ab }}"
 
 
 
