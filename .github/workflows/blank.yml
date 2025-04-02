@@ -12,10 +12,10 @@ jobs:
           echo "This is Stage One - Running basic checks"
           echo variable HI is = ${{ vars.HI }}
           echo secret is = ${{ secrets.SET }}
-          echo "{ab}=${{ vars.HI }}" >> $GITHUB_ENV
+          echo "ab=${{ vars.HI }}" >> $GITHUB_ENV
           echo ${{ env.ab }}
           echo "Printing ab: ${{ env.b }}"
-          echo "Printing ab: ${{ env.b }}"
+          echo "Printi1ng ab: ${{ env.b }}"
 
 
 
