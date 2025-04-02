@@ -13,4 +13,5 @@ jobs:
         run: |
           echo "This is Stage One - Running basic checks"
           echo variable HI is = ${{ vars.HI }}
+          echo secret is = ${{ secrets.AB }}
 
