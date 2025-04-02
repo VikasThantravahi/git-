@@ -1,32 +1,21 @@
-name: Echo Workflow - Parallel Jobs
+name: Simple CI Pipeline
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
+
 jobs:
-  filter:
+  stage-one:
     runs-on: ubuntu-latest
     steps:
-      - name: Filter paths (using dorny/paths-filter)
-        id: filter
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            # Define filters for your paths
-            frontend:
-              - 'test/an/*'
-      - name: Run my echo action
-        uses: ./.github/actions/my-echo-action
-        if: steps.filter.outputs.frontend == 'true'
-        with:
-          message: 'Hello from GitHub Actions!'
-      
-
-      - name: Run Frontend tests
-        if: steps.filter.outputs.frontend == 'true'  # Runs only if frontend files were changed
+      - name: Step 1 - Print message
         run: |
-          echo "Running frontend tests..."
-          # Add your commands to run frontend tests
+          echo "This is Stage One - Running basic checks"
+          echo b = ${{env.a}} >> $GITHUB_ENV
+      - name: Printing the variables
+        run: echo $b
 
-      
