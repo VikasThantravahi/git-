@@ -16,8 +16,6 @@ jobs:
           echo "a={{ vars.HI }}" >> $GITHUB_ENV
           echo "$a"
           echo "b=${{ secrets.AB }}" >> $GITHUB_ENV
-          echo "$b"
-          echo $b
-          
+
       - name: Printing the variables
         run: echo "b is ${{ env.b }}"
