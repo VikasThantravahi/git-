@@ -7,6 +7,12 @@ jobs:
   stage-one:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run System Info Action
+        uses: ./.github/actions/my-composite-action
+        
       - name: Step 1 - Print message
         run: |
           echo "This is Stage One - Running basic checks"
