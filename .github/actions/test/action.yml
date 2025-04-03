@@ -1,0 +1,26 @@
+name: "System Info Action"
+description: "Prints system details and repository structure"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Print Start Message
+      run: echo "📢 Starting system info check..."
+      shell: bash
+
+    - name: Print System Info
+      run: |
+        echo "🔹 OS: $(uname -a)"
+        echo "🔹 Current Date: $(date)"
+        echo "🔹 User: $(whoami)"
+      shell: bash
+
+    - name: List Files
+      run: |
+        echo "📂 Files in workspace:"
+        ls -la
+      shell: bash
+
+    - name: Print Completion Message
+      run: echo "✅ System info check complete!"
+      shell: bash
