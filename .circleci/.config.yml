@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  say_hello:
+    docker:
+      - image: cimg/base:stable  # Use a basic CircleCI Docker image
+    steps:
+      - run:
+          name: Print Echo Statement
+          command: echo "Hello from CircleCI!"
+
+workflows:
+  version: 2
+  simple_workflow:
+    jobs:
+      - say_hello
