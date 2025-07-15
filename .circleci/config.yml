@@ -7,7 +7,7 @@ jobs:
     steps:
       - run:
           name: Print Echo Statement
-          command: echo "Hello from CircleCI!"
+          command: echo "Hello from CircleC!"
 
 workflows:
   version: 2
