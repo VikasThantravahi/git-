@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   say_hello:
     docker:
-      - image: cimg/base:stable  # Use a basic CircleCI Docker image
+      - image: cimg/base:stable  # Use a basic CircleCI Docker images
     steps:
       - run:
           name: Print Echo Statement
